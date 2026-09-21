@@ -1,0 +1,5 @@
+.DS_Store
+.claude/
+# dati personali: stanno solo in Firebase e sul tuo computer
+dati_privati.json
+brief/PROMPT_claude_code.md

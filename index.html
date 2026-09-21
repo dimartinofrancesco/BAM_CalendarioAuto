@@ -1,0 +1,1155 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="forzati-modificato" content="2026-09-21">
+<meta name="theme-color" content="#FEF7FF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141218" media="(prefers-color-scheme: dark)">
+<title>Chi si siede dove?</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%236750A4'/%3E%3Crect x='16' y='8' width='32' height='48' rx='12' fill='%23fff'/%3E%3Crect x='20' y='14' width='10' height='12' rx='3' fill='%23D81B60'/%3E%3Crect x='34' y='14' width='10' height='12' rx='3' fill='%231976D2'/%3E%3Crect x='19' y='32' width='8' height='14' rx='3' fill='%232E7D32'/%3E%3Crect x='28' y='32' width='8' height='14' rx='3' fill='%23FFB300'/%3E%3Crect x='37' y='32' width='8' height='14' rx='3' fill='%23D81B60'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#FEF7FF; --s1:#F7F2FA; --s2:#F3EDF7; --s3:#ECE6F0;
+  --on:#1D1B20; --on2:#49454F; --line:#CAC4D0; --line2:#79747E;
+  --pri:#6750A4; --on-pri:#FFFFFF; --pri-c:#E9DDFF; --on-pri-c:#22005D;
+  --warn-c:#FFDEAD; --on-warn-c:#3D2400; --err:#B3261E;
+  --car:#E7E0EC; --car-line:#79747E; --tyre:#322F35; --seat-off:#D5CEDB; --lamp:#F9A825;
+  --O:#D81B60; --on-O:#FFFFFF; --L:#FFB300; --on-L:#1A1200;
+  --A:#2E7D32; --on-A:#FFFFFF; --M:#1976D2; --on-M:#FFFFFF;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#141218; --s1:#1D1B20; --s2:#211F26; --s3:#2B2930;
+    --on:#E6E0E9; --on2:#CAC4D0; --line:#49454F; --line2:#938F99;
+    --pri:#D0BCFF; --on-pri:#381E72; --pri-c:#4F378B; --on-pri-c:#EADDFF;
+    --warn-c:#5B3A00; --on-warn-c:#FFDDB3; --err:#F2B8B5;
+    --car:#2B2930; --car-line:#938F99; --tyre:#5A5661; --seat-off:#3A3740;
+  }
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--on);font:16px/1.4 Roboto,system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif}
+[hidden]{display:none!important}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible+span{outline:3px solid var(--pri);outline-offset:2px}
+svg{fill:currentColor;flex:none}
+
+.k-O{--kbg:var(--O);--kfg:var(--on-O)}
+.k-L{--kbg:var(--L);--kfg:var(--on-L)}
+.k-A{--kbg:var(--A);--kfg:var(--on-A)}
+.k-M{--kbg:var(--M);--kfg:var(--on-M)}
+
+/* ---------- struttura ---------- */
+.appbar{position:sticky;top:0;z-index:5;background:var(--bg);display:flex;align-items:center;gap:12px;
+  padding:max(env(safe-area-inset-top,0px),8px) 16px 8px;min-height:64px}
+.appbar .logo{width:40px;height:40px;border-radius:12px;background:var(--pri);color:var(--on-pri);display:grid;place-items:center}
+.appbar h1{margin:0;font-size:22px;line-height:26px;font-weight:600}
+.appbar small{display:block;color:var(--on2);font-size:13px}
+.appbar small span{white-space:nowrap}
+main{max-width:520px;margin:0 auto;padding:4px 16px calc(96px + env(safe-area-inset-bottom,0px))}
+.bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--s2);
+  padding-bottom:env(safe-area-inset-bottom,0px);display:flex;justify-content:center}
+.bottom-nav .in{display:flex;width:100%;max-width:520px}
+.nav-item{flex:1;min-height:68px;border:0;background:none;color:var(--on2);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:4px;font-size:12px;font-weight:500;letter-spacing:.02em}
+.nav-item .pill{width:64px;height:32px;border-radius:16px;display:grid;place-items:center}
+.nav-item[aria-current="page"]{color:var(--on)}
+.nav-item[aria-current="page"] .pill{background:var(--pri-c);color:var(--on-pri-c)}
+
+/* ---------- pulsanti ---------- */
+.icon-btn{width:56px;height:56px;border-radius:50%;border:0;background:var(--s3);color:var(--on);display:grid;place-items:center}
+.icon-btn:disabled{opacity:.38;cursor:default}
+.icon-btn svg{width:32px;height:32px}
+.btn{width:100%;min-height:52px;border-radius:26px;border:0;padding:0 24px;font-weight:600;font-size:16px;
+  display:flex;align-items:center;justify-content:center;gap:8px}
+.btn svg{width:22px;height:22px}
+.btn.filled{background:var(--pri);color:var(--on-pri)}
+.btn.tonal{background:var(--pri-c);color:var(--on-pri-c)}
+.btn.text{background:none;color:var(--pri);width:auto;padding:0 16px}
+.btn:disabled{opacity:.38;cursor:default}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0 4px}
+.chip{min-height:32px;padding:0 12px;border-radius:8px;border:1px solid var(--line2);background:none;color:var(--on2);
+  font-size:14px;font-weight:500;display:inline-flex;align-items:center;gap:6px}
+button.chip{min-height:40px;padding:0 16px}
+.chip.on{background:var(--pri-c);color:var(--on-pri-c);border-color:transparent}
+.chip.warn{background:var(--warn-c);color:var(--on-warn-c);border-color:transparent}
+
+/* ---------- vista giorno ---------- */
+.dayhead{display:grid;grid-template-columns:56px 1fr 56px;align-items:center;gap:4px;margin-top:8px}
+.dayhead .wd{font-size:clamp(22px,6.6vw,30px);line-height:1.15;font-weight:800;text-align:center}
+.dayhead .dt{font-size:clamp(16px,4.6vw,20px);color:var(--on2);text-align:center}
+.banner{border-radius:20px;padding:16px;background:var(--warn-c);color:var(--on-warn-c);margin-top:8px}
+.banner .t{font-size:15px;font-weight:600}
+.banner .d{font-size:clamp(20px,6vw,26px);font-weight:800;line-height:1.2;margin-top:2px}
+.banner .m{font-size:18px;font-weight:600;margin-top:4px}
+.next-card{margin:16px 0;border:3px solid var(--pri);border-radius:28px;padding:12px 12px 16px}
+.next-card .lbl{font-size:15px;font-weight:700;text-align:center;color:var(--pri);text-transform:uppercase;letter-spacing:.05em}
+.msg{border-radius:20px;background:var(--s2);padding:24px 20px;margin-top:16px;text-align:center}
+.msg h2{margin:0 0 8px;font-size:22px}
+.msg p{margin:0 0 20px;color:var(--on2);font-size:17px}
+
+.car{position:relative;margin:12px auto 4px;width:min(100%,440px);padding:0 14px}
+.tyre{position:absolute;width:14px;height:64px;border-radius:7px;background:var(--tyre)}
+.tyre.fl{left:0;top:58px}.tyre.fr{right:0;top:58px}.tyre.rl{left:0;bottom:44px}.tyre.rr{right:0;bottom:44px}
+.body{background:var(--car);border:3px solid var(--car-line);border-radius:64px 64px 36px 36px;padding:8px 12px 14px}
+.hood{height:30px;display:flex;justify-content:space-between;align-items:center;padding:0 12px}
+.hood i{width:26px;height:9px;border-radius:5px;background:var(--lamp)}
+.glass{height:8px;border-radius:4px;background:var(--car-line);opacity:.55;margin:2px 10px 12px}
+.seats{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.seat{grid-column:span 2;min-height:118px;border-radius:18px;padding:8px 2px;text-align:center;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-width:0}
+.seat .pos{font-size:12px;font-weight:700;line-height:1;letter-spacing:.05em;text-transform:uppercase}
+.seat.occ{background:var(--kbg);color:var(--kfg)}
+.seat .av{width:44px;height:44px;border-radius:50%;background:var(--kfg);color:var(--kbg);display:grid;place-items:center;font-size:26px;font-weight:800;line-height:1}
+.seat .nm{font-size:clamp(18px,5.4vw,24px);font-weight:800;line-height:1.1;max-width:100%}
+.seat.driver{background:var(--seat-off);color:var(--on2)}
+.seat.driver svg{width:44px;height:44px}
+.seat.driver .nm{font-size:13px;font-weight:600}
+.seat.empty{border:3px dashed var(--line2);color:var(--on2)}
+.seat.empty .nm{font-size:clamp(17px,5vw,22px)}
+.console{grid-column:span 2;align-self:center;height:64px;border-radius:16px;background:var(--seat-off);opacity:.6}
+.trunk{height:10px;border-radius:5px;background:var(--car-line);opacity:.55;margin:14px 22px 0}
+.line{font-size:clamp(17px,4.9vw,20px);font-weight:500;text-align:center;line-height:1.6;margin:10px 0 14px}
+.line .p{white-space:nowrap}
+.line .sep{color:var(--on2);padding:0 2px}
+.line b{font-weight:800}
+.actions{display:grid;gap:12px}
+.actions.duo{grid-template-columns:1fr 1fr;gap:8px}
+.btn.tile{flex-direction:column;border-radius:20px;min-height:76px;padding:8px 10px;font-size:15px;line-height:1.2;text-align:center;gap:4px}
+.btn.tile svg{width:24px;height:24px}
+.maxim{margin:0 0 16px;border-radius:20px;background:var(--pri-c);color:var(--on-pri-c);padding:14px 16px}
+.maxim .cap{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.maxim .cap svg{width:20px;height:20px}
+.maxim blockquote{margin:8px 0 0;font-size:clamp(17px,4.8vw,19px);font-weight:600;line-height:1.4}
+.forced{margin:12px 0 0;border-radius:16px;background:var(--warn-c);color:var(--on-warn-c);padding:12px 16px;font-weight:600;text-align:center}
+
+/* ---------- vista mese ---------- */
+.monthbar{display:grid;grid-template-columns:56px 1fr 56px;align-items:center;margin-top:8px}
+.monthbar h2{margin:0;text-align:center;font-size:24px;font-weight:800}
+.monthbar .sub{display:block;font-size:14px;font-weight:500;color:var(--on2)}
+.wdays,.grid7{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.wdays{margin:12px 0 4px;text-align:center;font-size:13px;font-weight:700;color:var(--on2)}
+.cell{min-height:72px;min-width:0;border-radius:12px;border:0;background:var(--s2);color:var(--on);padding:6px 0 4px;
+  display:flex;flex-direction:column;align-items:center;gap:4px}
+.cell.blank{background:none;pointer-events:none}
+.cell.off{background:none;color:var(--on2)}
+.cell.susp{background:var(--warn-c);color:var(--on-warn-c)}
+.cell.sel{outline:3px solid var(--pri);outline-offset:-1px}
+.cell .num{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:15px;font-weight:700}
+.cell.today .num{background:var(--pri);color:var(--on-pri)}
+.cell .no{font-size:10px;font-weight:700;line-height:1.1;text-transform:uppercase}
+.mini{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;width:100%;padding:0 3px}
+.mini i{aspect-ratio:1;border-radius:3px;display:grid;place-items:center;font-style:normal;font-weight:800;line-height:1;
+  font-size:clamp(8px,2.5vw,11px);background:var(--kbg);color:var(--kfg)}
+.mini .drv{background:var(--seat-off)}
+.mini .gap{visibility:hidden}
+.mini .emp{background:none;border:1px dashed var(--line2)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:center;margin:16px 0 8px}
+.legend span{display:inline-flex;align-items:center;gap:6px;font-weight:600}
+.legend i{width:20px;height:20px;border-radius:6px;background:var(--kbg);color:var(--kfg);display:grid;place-items:center;font-style:normal;font-size:12px;font-weight:800}
+.legend .d{background:var(--seat-off)}
+.hint{font-size:13px;color:var(--on2);text-align:center;margin:0 0 8px}
+.card{border-radius:20px;background:var(--s2);padding:16px;margin-top:16px}
+.card h3{margin:0 0 8px;font-size:16px;font-weight:700}
+.card ul{list-style:none;margin:0;padding:0}
+.card li{display:flex;gap:12px;padding:6px 0;border-top:1px solid var(--line);align-items:center}
+.card li:first-child{border-top:0}
+.card li b{min-width:64px}
+.card li .grow{flex:1}
+.card p{margin:0;color:var(--on2)}
+
+/* ---------- statistiche ---------- */
+.stats h2{margin:16px 0 4px;font-size:22px}
+.stats .sub{margin:0 0 12px;color:var(--on2)}
+.tblwrap{overflow-x:auto;border-radius:20px;background:var(--s2)}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:center;padding:10px 4px}
+th{font-size:12px;line-height:1.2;font-weight:700;color:var(--on2)}
+th:first-child,td:first-child{text-align:left;padding-left:12px}
+td{font-size:20px;font-weight:700;border-top:1px solid var(--line)}
+td.who{font-size:16px;font-weight:800;white-space:nowrap}
+td.who i{display:inline-block;width:12px;height:12px;border-radius:4px;background:var(--kbg);margin-right:6px}
+td.tot{color:var(--on2)}
+.verdict{margin-top:12px;border-radius:16px;background:var(--pri-c);color:var(--on-pri-c);padding:12px 16px;font-weight:600}
+
+/* ---------- dialog & snackbar ---------- */
+dialog{border:0;border-radius:28px;padding:24px;background:var(--s2);color:var(--on);width:min(92vw,400px);max-height:92vh;overflow:auto}
+dialog::backdrop{background:rgba(0,0,0,.55)}
+dialog h2{margin:0 0 4px;font-size:24px;font-weight:600}
+dialog .when{margin:0 0 16px;color:var(--on2);font-size:16px}
+.kids{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 16px}
+.kid{position:relative;display:block}
+.kid input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
+.kid span{min-height:60px;border-radius:16px;border:2px solid var(--kbg);display:flex;align-items:center;justify-content:center;gap:8px;
+  font-size:18px;font-weight:800}
+.kid input:checked+span{background:var(--kbg);color:var(--kfg)}
+.kid svg{width:22px;height:22px;display:none}
+.kid input:checked+span svg{display:block}
+.forza{display:grid;gap:10px;margin:0 0 16px}
+.forza label{display:grid;grid-template-columns:92px 1fr;align-items:center;gap:10px;font-size:14px;font-weight:700}
+.forza select{width:100%;min-height:54px;border-radius:14px;border:2px solid var(--line2);background:var(--s3);color:var(--on);
+  font:800 18px/1.2 inherit;font-family:inherit;padding:0 12px}
+.forza select[class*="k-"]{border-color:var(--kbg);background:var(--kbg);color:var(--kfg)}
+.forza option{background:var(--s2);color:var(--on)}
+.preview{border-radius:16px;background:var(--s3);padding:12px 14px;font-size:15px;line-height:1.6;margin:0 0 16px}
+.preview .t{display:block;font-size:13px;font-weight:700;color:var(--on2);text-transform:uppercase;letter-spacing:.04em}
+.note{color:var(--on2);font-size:14px;margin:-6px 0 14px}
+.dlg-actions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+.dlg-actions .btn{width:auto;flex:1 1 auto}
+.dlg-actions .btn.text{flex:0 0 auto}
+.snack{position:fixed;left:16px;right:16px;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:20;margin:0 auto;max-width:480px;
+  background:var(--on);color:var(--bg);border-radius:12px;padding:14px 16px;font-size:15px;font-weight:500}
+.print-only{display:none}
+noscript p{padding:16px;font-size:18px}
+/* accesso con password: finche' non sei autorizzato si vede solo #gate */
+body.bloccato>:not(#gate){display:none!important}
+#gate{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px 16px}
+#gate[hidden]{display:none}
+.gate-in{width:100%;max-width:360px}
+.gate-in h1{margin:0 0 12px;font-size:26px}
+.gate-in .note{margin:0 0 14px}
+.gate-in input{width:100%;box-sizing:border-box;min-height:54px;border-radius:14px;border:2px solid var(--line2);background:var(--s3);color:var(--on);
+  font:600 18px/1.2 inherit;font-family:inherit;padding:0 14px;margin:0 0 12px}
+#gate-msg{margin:12px 0 0;color:var(--err);font-weight:600}
+
+/* ---------- stampa ---------- */
+@page{size:A4 portrait;margin:12mm}
+@media print{
+  :root{--on:#000;--on2:#333;--line:#bbb;--line2:#777;--seat-off:#c9c9c9;--warn-c:#eee;--on-warn-c:#000;--s2:#fff;--pri:#000}
+  body{background:#fff;color:#000;font-size:11pt}
+  .appbar,.bottom-nav,.snack,.no-print,.monthbar button,.hint{display:none!important}
+  main{max-width:none;padding:0}
+  .print-only{display:block;text-align:center;margin:0 0 4mm;font-size:12pt}
+  .monthbar{display:block}
+  .monthbar h2{font-size:20pt}
+  .cell{min-height:24mm;border:1px solid #888;background:#fff!important;color:#000!important;break-inside:avoid;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .cell.susp{background:#eee!important}
+  .cell.sel{outline:0}
+  .cell.today .num{background:none;color:#000}
+  .mini,.mini i,.legend i{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .mini i{font-size:8pt}
+  .card{background:#fff;border:1px solid #888;padding:3mm;margin-top:4mm}
+  .card li{border-color:#bbb}
+}
+</style>
+</head>
+<body>
+<noscript><p>Per vedere i posti in macchina serve JavaScript attivo.</p></noscript>
+
+<section id="gate" hidden>
+  <div class="gate-in">
+    <h1>Accesso riservato</h1>
+    <p id="gate-verifica" class="note" hidden>Verifico l'accesso…</p>
+    <form id="gate-form" hidden>
+      <p class="note">Inserisci la password per vedere i posti in macchina.</p>
+      <input id="gate-pwd" type="password" autocomplete="current-password" placeholder="Password" aria-label="Password" required>
+      <button class="btn filled" type="submit">Entra</button>
+    </form>
+    <p id="gate-msg" role="alert" hidden></p>
+  </div>
+</section>
+
+<header class="appbar">
+  <div class="logo" id="logo"></div>
+  <div><h1>Chi si siede dove?</h1><small id="appbar-sub">A.s. 2026/27</small></div>
+</header>
+
+<main id="main" aria-live="polite">
+  <section id="view-giorno"></section>
+  <section id="view-mese" hidden></section>
+  <section id="view-stat" class="stats" hidden></section>
+</main>
+
+<nav class="bottom-nav" aria-label="Sezioni">
+  <div class="in">
+    <button class="nav-item" data-tab="giorno"><span class="pill" data-icon="car"></span>Giorno</button>
+    <button class="nav-item" data-tab="mese"><span class="pill" data-icon="month"></span>Mese</button>
+    <button class="nav-item" data-tab="stat"><span class="pill" data-icon="bars"></span>Equità</button>
+  </div>
+</nav>
+
+<dialog id="dlg" aria-labelledby="dlg-title">
+  <h2 id="dlg-title">Chi è assente?</h2>
+  <p class="when" id="dlg-when"></p>
+  <div class="kids" id="dlg-kids"></div>
+  <p class="note" id="dlg-regola">Puoi scegliere più assenti. Posti liberi: 1 assente → il centro · 2 assenti → centro e avanti · 3 assenti → si usa solo l'avanti.</p>
+  <p class="note" id="dlg-note" hidden></p>
+  <div class="preview" id="dlg-prev" hidden></div>
+  <div class="dlg-actions">
+    <button class="btn text" id="dlg-annulla" type="button">Annulla</button>
+    <button class="btn filled" id="dlg-ok" type="button"></button>
+  </div>
+</dialog>
+
+<dialog id="dlgf" aria-labelledby="dlgf-title">
+  <h2 id="dlgf-title">Forza disposizione</h2>
+  <p class="when" id="dlgf-when"></p>
+  <div class="forza" id="dlgf-sel"></div>
+  <p class="note" id="dlgf-note" hidden></p>
+  <div class="dlg-actions">
+    <button class="btn text" id="dlgf-annulla" type="button">Annulla</button>
+    <button class="btn text" id="dlgf-ripr" type="button" hidden>Ripristina</button>
+    <button class="btn filled" id="dlgf-ok" type="button">Forza e avvisa su WhatsApp</button>
+  </div>
+</dialog>
+
+<div class="snack" id="snack" role="status" hidden></div>
+
+<!-- Dati incorporati: si aggiornano con  python3 aggiorna_dati.py  -->
+<script type="application/json" id="dati-calendario">{"ordine_posti":["Avanti","Dietro sinistra","Centro","Dietro destra"],"sigle":{"O":"O","L":"L","A":"A","M":"M"},"sabato_a_scuola":false,"sospensioni":{"2026-10-30":"Recupero anticipo inizio anno","2026-11-02":"Commemorazione dei defunti","2026-12-07":"Ponte Immacolata","2026-12-08":"Immacolata Concezione","2026-12-23":"Festività natalizie","2026-12-24":"Festività natalizie","2026-12-25":"Natale","2026-12-26":"Santo Stefano","2026-12-28":"Festività natalizie","2026-12-29":"Festività natalizie","2026-12-30":"Festività natalizie","2026-12-31":"Festività natalizie","2027-01-01":"Capodanno","2027-01-02":"Festività natalizie","2027-01-04":"Festività natalizie","2027-01-05":"Festività natalizie","2027-01-06":"Epifania","2027-02-08":"Carnevale","2027-02-09":"Carnevale","2027-02-10":"Recupero anticipo inizio anno","2027-03-25":"Festività pasquali","2027-03-26":"Festività pasquali","2027-03-27":"Festività pasquali","2027-03-29":"Lunedì dell'Angelo","2027-03-30":"Festività pasquali","2027-04-25":"Festa della Liberazione","2027-04-30":"Recupero anticipo inizio anno","2027-05-01":"Festa del Lavoro","2027-06-02":"Festa della Repubblica"},"giorni":[{"data":"2026-09-10","giorno":"gio","n_scuola":1,"disposizione":"OMLA","ricostruito":true,"avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2026-09-11","giorno":"ven","n_scuola":2,"disposizione":"LAOM","ricostruito":true,"avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2026-09-14","giorno":"lun","n_scuola":3,"disposizione":"MLAO","ricostruito":true,"avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2026-09-15","giorno":"mar","n_scuola":4,"disposizione":"AOML","ricostruito":true,"avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2026-09-16","giorno":"mer","n_scuola":5,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2026-09-17","giorno":"gio","n_scuola":6,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2026-09-18","giorno":"ven","n_scuola":7,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2026-09-21","giorno":"lun","n_scuola":8,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2026-09-22","giorno":"mar","n_scuola":9,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2026-09-23","giorno":"mer","n_scuola":10,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2026-09-24","giorno":"gio","n_scuola":11,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2026-09-25","giorno":"ven","n_scuola":12,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2026-09-28","giorno":"lun","n_scuola":13,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2026-09-29","giorno":"mar","n_scuola":14,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2026-09-30","giorno":"mer","n_scuola":15,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2026-10-01","giorno":"gio","n_scuola":16,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2026-10-02","giorno":"ven","n_scuola":17,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2026-10-05","giorno":"lun","n_scuola":18,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2026-10-06","giorno":"mar","n_scuola":19,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2026-10-07","giorno":"mer","n_scuola":20,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2026-10-08","giorno":"gio","n_scuola":21,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2026-10-09","giorno":"ven","n_scuola":22,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2026-10-12","giorno":"lun","n_scuola":23,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2026-10-13","giorno":"mar","n_scuola":24,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2026-10-14","giorno":"mer","n_scuola":25,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2026-10-15","giorno":"gio","n_scuola":26,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2026-10-16","giorno":"ven","n_scuola":27,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2026-10-19","giorno":"lun","n_scuola":28,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2026-10-20","giorno":"mar","n_scuola":29,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2026-10-21","giorno":"mer","n_scuola":30,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2026-10-22","giorno":"gio","n_scuola":31,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2026-10-23","giorno":"ven","n_scuola":32,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2026-10-26","giorno":"lun","n_scuola":33,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2026-10-27","giorno":"mar","n_scuola":34,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2026-10-28","giorno":"mer","n_scuola":35,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2026-10-29","giorno":"gio","n_scuola":36,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2026-11-03","giorno":"mar","n_scuola":37,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2026-11-04","giorno":"mer","n_scuola":38,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2026-11-05","giorno":"gio","n_scuola":39,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2026-11-06","giorno":"ven","n_scuola":40,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2026-11-09","giorno":"lun","n_scuola":41,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2026-11-10","giorno":"mar","n_scuola":42,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2026-11-11","giorno":"mer","n_scuola":43,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2026-11-12","giorno":"gio","n_scuola":44,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2026-11-13","giorno":"ven","n_scuola":45,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2026-11-16","giorno":"lun","n_scuola":46,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2026-11-17","giorno":"mar","n_scuola":47,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2026-11-18","giorno":"mer","n_scuola":48,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2026-11-19","giorno":"gio","n_scuola":49,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2026-11-20","giorno":"ven","n_scuola":50,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2026-11-23","giorno":"lun","n_scuola":51,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2026-11-24","giorno":"mar","n_scuola":52,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2026-11-25","giorno":"mer","n_scuola":53,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2026-11-26","giorno":"gio","n_scuola":54,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2026-11-27","giorno":"ven","n_scuola":55,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2026-11-30","giorno":"lun","n_scuola":56,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2026-12-01","giorno":"mar","n_scuola":57,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2026-12-02","giorno":"mer","n_scuola":58,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2026-12-03","giorno":"gio","n_scuola":59,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2026-12-04","giorno":"ven","n_scuola":60,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2026-12-09","giorno":"mer","n_scuola":61,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2026-12-10","giorno":"gio","n_scuola":62,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2026-12-11","giorno":"ven","n_scuola":63,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2026-12-14","giorno":"lun","n_scuola":64,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2026-12-15","giorno":"mar","n_scuola":65,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2026-12-16","giorno":"mer","n_scuola":66,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2026-12-17","giorno":"gio","n_scuola":67,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2026-12-18","giorno":"ven","n_scuola":68,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2026-12-21","giorno":"lun","n_scuola":69,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2026-12-22","giorno":"mar","n_scuola":70,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2027-01-07","giorno":"gio","n_scuola":71,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2027-01-08","giorno":"ven","n_scuola":72,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2027-01-11","giorno":"lun","n_scuola":73,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2027-01-12","giorno":"mar","n_scuola":74,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2027-01-13","giorno":"mer","n_scuola":75,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2027-01-14","giorno":"gio","n_scuola":76,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2027-01-15","giorno":"ven","n_scuola":77,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2027-01-18","giorno":"lun","n_scuola":78,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2027-01-19","giorno":"mar","n_scuola":79,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2027-01-20","giorno":"mer","n_scuola":80,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2027-01-21","giorno":"gio","n_scuola":81,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2027-01-22","giorno":"ven","n_scuola":82,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2027-01-25","giorno":"lun","n_scuola":83,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2027-01-26","giorno":"mar","n_scuola":84,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2027-01-27","giorno":"mer","n_scuola":85,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2027-01-28","giorno":"gio","n_scuola":86,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2027-01-29","giorno":"ven","n_scuola":87,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2027-02-01","giorno":"lun","n_scuola":88,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2027-02-02","giorno":"mar","n_scuola":89,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2027-02-03","giorno":"mer","n_scuola":90,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2027-02-04","giorno":"gio","n_scuola":91,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2027-02-05","giorno":"ven","n_scuola":92,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2027-02-11","giorno":"gio","n_scuola":93,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2027-02-12","giorno":"ven","n_scuola":94,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2027-02-15","giorno":"lun","n_scuola":95,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2027-02-16","giorno":"mar","n_scuola":96,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2027-02-17","giorno":"mer","n_scuola":97,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2027-02-18","giorno":"gio","n_scuola":98,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2027-02-19","giorno":"ven","n_scuola":99,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2027-02-22","giorno":"lun","n_scuola":100,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2027-02-23","giorno":"mar","n_scuola":101,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2027-02-24","giorno":"mer","n_scuola":102,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2027-02-25","giorno":"gio","n_scuola":103,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2027-02-26","giorno":"ven","n_scuola":104,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2027-03-01","giorno":"lun","n_scuola":105,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2027-03-02","giorno":"mar","n_scuola":106,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2027-03-03","giorno":"mer","n_scuola":107,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2027-03-04","giorno":"gio","n_scuola":108,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2027-03-05","giorno":"ven","n_scuola":109,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2027-03-08","giorno":"lun","n_scuola":110,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2027-03-09","giorno":"mar","n_scuola":111,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2027-03-10","giorno":"mer","n_scuola":112,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2027-03-11","giorno":"gio","n_scuola":113,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2027-03-12","giorno":"ven","n_scuola":114,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2027-03-15","giorno":"lun","n_scuola":115,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2027-03-16","giorno":"mar","n_scuola":116,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2027-03-17","giorno":"mer","n_scuola":117,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2027-03-18","giorno":"gio","n_scuola":118,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2027-03-19","giorno":"ven","n_scuola":119,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2027-03-22","giorno":"lun","n_scuola":120,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2027-03-23","giorno":"mar","n_scuola":121,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2027-03-24","giorno":"mer","n_scuola":122,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2027-03-31","giorno":"mer","n_scuola":123,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2027-04-01","giorno":"gio","n_scuola":124,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2027-04-02","giorno":"ven","n_scuola":125,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2027-04-05","giorno":"lun","n_scuola":126,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2027-04-06","giorno":"mar","n_scuola":127,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2027-04-07","giorno":"mer","n_scuola":128,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2027-04-08","giorno":"gio","n_scuola":129,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2027-04-09","giorno":"ven","n_scuola":130,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2027-04-12","giorno":"lun","n_scuola":131,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2027-04-13","giorno":"mar","n_scuola":132,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2027-04-14","giorno":"mer","n_scuola":133,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2027-04-15","giorno":"gio","n_scuola":134,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2027-04-16","giorno":"ven","n_scuola":135,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2027-04-19","giorno":"lun","n_scuola":136,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2027-04-20","giorno":"mar","n_scuola":137,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2027-04-21","giorno":"mer","n_scuola":138,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2027-04-22","giorno":"gio","n_scuola":139,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2027-04-23","giorno":"ven","n_scuola":140,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2027-04-26","giorno":"lun","n_scuola":141,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2027-04-27","giorno":"mar","n_scuola":142,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2027-04-28","giorno":"mer","n_scuola":143,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2027-04-29","giorno":"gio","n_scuola":144,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2027-05-03","giorno":"lun","n_scuola":145,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2027-05-04","giorno":"mar","n_scuola":146,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2027-05-05","giorno":"mer","n_scuola":147,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2027-05-06","giorno":"gio","n_scuola":148,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2027-05-07","giorno":"ven","n_scuola":149,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2027-05-10","giorno":"lun","n_scuola":150,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2027-05-11","giorno":"mar","n_scuola":151,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2027-05-12","giorno":"mer","n_scuola":152,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2027-05-13","giorno":"gio","n_scuola":153,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2027-05-14","giorno":"ven","n_scuola":154,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2027-05-17","giorno":"lun","n_scuola":155,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2027-05-18","giorno":"mar","n_scuola":156,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2027-05-19","giorno":"mer","n_scuola":157,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2027-05-20","giorno":"gio","n_scuola":158,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2027-05-21","giorno":"ven","n_scuola":159,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2027-05-24","giorno":"lun","n_scuola":160,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2027-05-25","giorno":"mar","n_scuola":161,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2027-05-26","giorno":"mer","n_scuola":162,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2027-05-27","giorno":"gio","n_scuola":163,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2027-05-28","giorno":"ven","n_scuola":164,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2027-05-31","giorno":"lun","n_scuola":165,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2027-06-01","giorno":"mar","n_scuola":166,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"},{"data":"2027-06-03","giorno":"gio","n_scuola":167,"disposizione":"MLAO","avanti":"M","dietro_sx":"L","centro":"A","dietro_dx":"O"},{"data":"2027-06-04","giorno":"ven","n_scuola":168,"disposizione":"AOML","avanti":"A","dietro_sx":"O","centro":"M","dietro_dx":"L"},{"data":"2027-06-07","giorno":"lun","n_scuola":169,"disposizione":"OMLA","avanti":"O","dietro_sx":"M","centro":"L","dietro_dx":"A"},{"data":"2027-06-08","giorno":"mar","n_scuola":170,"disposizione":"LAOM","avanti":"L","dietro_sx":"A","centro":"O","dietro_dx":"M"}]}</script>
+<script type="application/json" id="dati-forzati">{"_come_si_usa":"Aggiungi in 'forzati' un oggetto per ogni giorno con assenti. Con piu' assenti i posti liberi sono: 1 assente = centro, 2 = centro e avanti, 3 = si usa solo avanti. Il tasto 'Ricalcola con assenti' dell'app ti manda su WhatsApp la riga gia' pronta da incollare. Dopo il salvataggio su GitHub la pagina ricalcola da sola tutti i giorni successivi.","_formato":"{\"data\": \"AAAA-MM-GG\", \"assenti\": [\"M\"]}  -  assenti = sigle dei bambini (O, L, A, M). Solo giorni di scuola. La data 'agg.' mostrata nella barra in alto e' l'ultima modifica di questo file.","_opzionale":"Per forzare i posti a mano aggiungi \"disposizione\": 4 lettere nell'ordine Avanti, Dietro sx, Centro, Dietro dx, con - per il posto vuoto (es. \"OL-A\"). Se presente ha la precedenza sul calcolo.","forzati":[]}</script>
+<script type="application/json" id="dati-massime">["Il semaforo rosso è la strada che ti dice: respira, stai andando alla grande.","Il caffè non è una bevanda: è il carburante dell'autista. Controlla il livello prima di partire.","Chi guida ha sempre ragione. Chi sta dietro ha sempre fame.","Il navigatore dice «svolta a destra». L'autista esperto risponde: «Lo so, lo stavo per fare».","Nessuno arriva in ritardo: è che i minuti, la mattina, corrono più veloci.","La cintura è come il buon umore: si allaccia prima di partire.","Tre regole per una mattina perfetta: cinture, musica e niente «quanto manca?».","Oggi la missione è: quattro bambini, quattro zaini, zero corse dell'ultimo minuto.","Il parcheggio perfetto esiste: è quello che ha appena occupato qualcun altro.","Se il traffico è lento, è solo la strada che vuole godersi la compagnia.","Il freno è l'amico che ti salva, il clacson è l'amico che urla. Usali con affetto.","L'autista è l'unica persona che vede tutta la strada e sente tutti i commenti dei sedili.","Il posto davanti non si litiga: si guarda il calendario. Ha sempre ragione lui.","Una buona partenza vale mezza giornata. Una brutta partenza vale un caffè in più.","Chi canta in macchina spaventa gli ingorghi. Consigliato il coro completo.","La sveglia suona sempre un attimo prima che tu sia pronto. È una legge della natura.","Ogni mattina l'autista fa un piccolo miracolo: quattro paia di scarpe, tutte allacciate.","Non è traffico: è una festa a cui nessuno ha voluto rinunciare.","La spia della benzina non è un allarme: è un invito a fare un giro al distributore.","Guida come se in macchina ci fossero quattro tesori. Ah, ci sono davvero.","Se qualcuno chiede «siamo arrivati?», rispondi con calma: «No. Ma manca meno di prima».","La musica giusta trasforma un semaforo rosso in un concerto.","Una barzelletta in macchina accorcia la strada di almeno tre semafori.","Un bravo autista guarda la strada, lo specchietto e l'orologio. Il telefono lo lascia in pace.","Chi arriva per primo a scuola vince il parcheggio. Chi arriva ultimo vince una bella corsa.","Quando tutti dormono in macchina, l'autista si sente un pilota di astronavi silenziose.","Lo specchietto serve a guardare indietro. Ma non per controllare chi ha finito la merenda.","L'autista che dice «due minuti» ha un concetto tutto suo di minuti.","La pazienza è come la benzina: se ne consuma tanta, ma la mattina si fa il pieno.","Il tergicristallo lavora tutto il giorno e non chiede mai un aumento. Sii come lui.","Il vero superpotere dell'autista è sapere dov'è quello zaino che nessuno trova.","Se dici «tra poco arriviamo» tre volte, il tra poco diventa una filastrocca.","L'autista perfetto non esiste. Quello con il sorriso però ci va vicino.","La macchina ha quattro ruote, ma la vera forza sono le quattro voci che fanno da colonna sonora.","Un abbraccio prima di scendere vale più di un buon parcheggio.","Chi accende la radio senza chiedere rischia una vera discussione. Si consiglia una votazione.","L'autista ha sempre il cambio giusto. Peccato che a volte manchi la marcia dell'allegria.","Se piove, il tergicristallo ci mette il ritmo: tic, tac, tic, tac. Ballare è consentito, con le mani a posto.","Mai fidarsi di un «sono pronto» detto con una scarpa sola.","Il vero segreto per arrivare in orario? Fare finta che la scuola inizi dieci minuti prima.","La strada per la scuola è piena di sorprese. Di solito sono quattro e siedono in macchina con te.","Se al semaforo senti «uffa!», rispondi con «evviva!». Funziona meglio di quanto pensi.","Oggi si parte con il sorriso. Se non c'è, si può sempre prendere in prestito da chi sta dietro.","La ruota di scorta è la prova che qualcuno, una volta, ha pensato a tutto. Speriamo sia tu.","Non è colpa dell'autista se i semafori diventano rossi: lo fanno per divertirsi.","Ogni mattina la macchina è un piccolo teatro: sipario alle 7:45, applausi alle 8:00.","Un buon autista non dice «ve l'avevo detto». Dice «questa è una pausa non prevista».","Fare il pieno di pazienza è più economico che fare il pieno di benzina.","Se senti un rumore strano, non è la macchina: è il sacchetto della merenda che si sta muovendo.","Il clacson è per le emergenze, non per salutare i vicini. Ma il sorriso sì.","Chi ha detto che la mattina è brutta? Non aveva mai provato il posto davanti.","Il volante gira, il mondo gira, e la merenda... la merenda si è già mangiata.","Regola d'oro dell'autista: prima il sorriso, poi le cinture, poi il sorriso di nuovo.","Se il navigatore si arrabbia, ricordagli che anche lui una volta ha sbagliato strada.","Il traffico è come il latte: se lo guardi troppo non bolle mai.","Un autista felice fa tre cose: canta, sorride e ogni tanto sbaglia le parole della canzone.","Nessuno è troppo grande per un «vai piano!» detto con amore.","La freccia serve a dire dove vai. Il buonumore serve a dire come stai.","Oggi l'autista è stato promosso: da tassista a pilota di gran premio, ma con il limite di velocità.","Un semaforo verde dura poco. Un sorriso dura di più.","Se la strada è in salita, ricordati che il caffè è in discesa.","Un buon autista sa parcheggiare dove nessuno pensa ci sia posto. E poi dove c'è posto per davvero.","La differenza tra un bravo autista e un ottimo autista? Il secondo ha già dato la merenda.","Ogni volta che senti «uffa», immagina che sia la macchina a sussurrare «coraggio».","Il bello del mattino è che c'è sempre qualcuno che dice «ho dimenticato...». Il brutto è che non manca mai.","Oggi ti auguriamo pochi semafori rossi e tanti verdi che sembrano fatti apposta.","Non è vero che le cose belle arrivano a chi aspetta. Arrivano a chi mette la freccia.","L'autista ha tre nemici: il traffico, il buco nella strada e chi dice «ma non era di là?».","Chi guida con il sorriso arriva sempre due minuti prima. Nel cuore.","Le macchine più belle non sono quelle veloci: sono quelle con il posto per tutti.","Ogni mattina c'è una gara: chi si allaccia prima la cintura vince un applauso.","Consiglio dell'autista saggio: mai fare una gara di sbadigli in macchina. Vince sempre il primo.","Se la strada è dritta, canta. Se c'è una curva, canta più piano. Se c'è un dosso, canta con il vibrato.","L'ingorgo è l'unico momento in cui tutti sono d'accordo su una cosa: vogliamo già essere arrivati.","Il miglior amico dell'autista è il parcheggio libero. Il secondo è il caffè.","Se senti qualcuno russare dietro, complimenti: hai creato un ambiente molto rilassante.","Più un semaforo dura, più la canzone deve essere lunga. Chi sceglie la musica lo sa.","Il volante non ha bottoni per la merenda. Ma un bravo autista sa dove trovarla.","Non ti serve il turbo per arrivare a scuola: ti serve solo un buon motivo per sorridere.","Mai sottovalutare il potere di un «buongiorno» detto prima di mettere in moto.","Quando qualcuno chiede «Ci sei?», rispondi: «Sì, sono al volante. Il resto arriva dopo il caffè».","Il navigatore sa tutto delle strade. Ma non sa niente di dove si trova il tuo buonumore.","L'autista ideale: sereno come un lago, veloce come un pensiero, silenzioso come un gatto. Quasi.","Prima regola dell'autista: non chiedere mai a un bambino di fare silenzio. Chiedi di cantare piano.","Se qualcuno ti taglia la strada, immagina che stia correndo a prendere l'ultimo cornetto.","Ai semafori l'autista si trasforma in un poeta: guarda avanti e pensa alla colazione.","Una buona partenza comincia sempre da «Avete preso tutto?». E finisce con «Ah, gli zaini».","Chi ha inventato la retromarcia non ha mai dovuto parcheggiare davanti a una scuola.","L'autista è la persona più importante della macchina, subito dopo chi ha in mano la merenda.","Tra il dire e il fare c'è di mezzo un semaforo. Ma anche un buon caffè.","Se la macchina davanti è lenta, sono i suoi bambini che stanno decidendo la colonna sonora.","Alle 7:30 il mondo è più silenzioso. Alle 7:45 c'è già qualcuno che vuole cambiare canzone.","Se un bambino dice «ho sonno», rispondi: «Anch'io». E siete già in due.","Non c'è nessun problema che un buon sorriso e mezza canzone non possano risolvere prima di scuola.","Il traffico passa. I ricordi in macchina restano. Soprattutto quelli con le canzoni stonate.","Chi ha detto che i miracoli non esistono non ha mai visto quattro bambini pronti alle 7:30.","Ricordati di guardare il cielo prima di partire: se c'è il sole, il buonumore è incluso.","La macchina è più contenta quando l'autista ride. Non c'è scienza, ma funziona.","L'autista saggio sa che c'è un posto per tutto: la sciarpa nel sedile, il cappello nel cruscotto, le briciole ovunque.","Ogni viaggio comincia con un passo. Ogni viaggio in macchina comincia con «hai preso le chiavi?».","Nessuna strada è troppo lunga per chi ha una buona playlist e quattro coristi.","L'ultima cosa che un autista dimentica è il buonumore. La prima è dove ha parcheggiato ieri.","Alla fine di ogni tragitto c'è sempre qualcuno che dice «di già?». È il complimento più bello.","Se oggi il traffico è tanto, guarda il lato positivo: hai più tempo per ascoltare le storie dei bambini.","Dove c'è un autista che sorride, il semaforo rosso dura un po' meno.","Un viaggio con quattro passeggeri è un viaggio con quattro storie da ascoltare. Almeno tre sono vere.","L'autista non ha il pulsante della pausa, ma ha il pulsante «ancora una canzone».","Se il semaforo è rosso, hai appena guadagnato il tempo per un bel respiro e una smorfia allo specchietto.","Il segreto di un buon viaggio? Cinture allacciate, finestrini chiusi e nessuno che dice «devo fare pipì».","Una macchina piena di bambini è un'orchestra: tu sei il direttore, e a volte l'unico che sta zitto.","Il vero rally si corre alle 7:55, davanti al cancello della scuola: vince chi trova il parcheggio.","Nessun bambino ha mai chiesto «quanto manca?» durante la canzone giusta.","Se un giorno sbagli strada, chiamalo «giro panoramico». Funziona con quasi tutti.","L'autista è il capitano della nave: tiene la rotta, sopporta le onde e non dimentica mai la merenda.","Lo sapevi? Le macchine vanno più forte quando qualcuno dice «grazie, autista!». Provare per credere.","Un caffè al mattino è come una cintura: ti tiene ben saldo al resto della giornata.","Il parcheggio in doppia fila ha sempre un motivo: breve a parole, lunghissimo nei fatti.","Ogni buon autista ha una canzone segreta che canta solo quando tutti sono già scesi."]</script>
+
+<!-- ===================== LOGICA (pura, senza DOM) ===================== -->
+<script id="logica">
+const Posti = (() => {
+  'use strict';
+  const DAY = 86400000;
+  const p2 = n => String(n).padStart(2, '0');
+  const isoToMs = iso => { const [y, m, d] = iso.split('-').map(Number); return Date.UTC(y, m - 1, d); };
+  const msToIso = ms => { const d = new Date(ms); return d.getUTCFullYear() + '-' + p2(d.getUTCMonth() + 1) + '-' + p2(d.getUTCDate()); };
+  const addDays = (iso, n) => msToIso(isoToMs(iso) + n * DAY);
+  const diffDays = (a, b) => Math.round((isoToMs(b) - isoToMs(a)) / DAY);
+  const giornoSettimana = iso => new Date(isoToMs(iso)).getUTCDay(); // 0 = domenica
+
+  // permutazioni di [0..n-1]
+  const permutazioni = n => {
+    const out = [];
+    (function rec(rest, acc) {
+      if (!rest.length) { out.push(acc); return; }
+      rest.forEach((x, i) => rec(rest.filter((_, j) => j !== i), acc.concat(x)));
+    })(Array.from({ length: n }, (_, i) => i), []);
+    return out;
+  };
+
+  /* Posti che restano in uso in base a quanti bambini sono presenti (gli altri restano vuoti):
+       4 presenti: tutti · 3 presenti (1 assente): libero il centro · 2 presenti: liberi centro e avanti · 1 presente: solo avanti */
+  const POSTI_IN_USO = {
+    4: ['Avanti', 'Dietro sinistra', 'Centro', 'Dietro destra'],
+    3: ['Avanti', 'Dietro sinistra', 'Dietro destra'],
+    2: ['Dietro sinistra', 'Dietro destra'],
+    1: ['Avanti'],
+    0: []
+  };
+
+  /* Sceglie la disposizione di un giorno: i presenti occupano i posti in uso (vedi sopra) e, tra tutte le sistemazioni,
+     si prende quella che assegna a ciascuno i posti su cui si e' seduto MENO volte (equita');
+     a parita' evita di far ripetere il posto di ieri, e a ulteriore parita' segue il piano base del calendario.
+     Senza assenti coincide col ciclo originale. */
+  function scegli(base, assenti, cnt, sigle, perms, usati, ieri) {
+    const presenti = sigle.filter(s => !assenti.includes(s));
+    const posti = usati[presenti.length];
+    const baseAdj = [...base].map(c => (assenti.includes(c) ? '-' : c));
+    let best = null;
+    for (const perm of perms[presenti.length]) {
+      const cand = Array(base.length).fill('-');
+      perm.forEach((k, j) => { cand[posti[j]] = presenti[k]; });
+      const s = cand.join('');
+      let costo = 0, ripetuti = 0, uguali = 0;
+      cand.forEach((c, pos) => {
+        if (c !== '-') { costo += cnt[c][pos]; if (ieri[pos] === c) ripetuti++; }
+        if (c === baseAdj[pos]) uguali++;
+      });
+      const chiave = [costo, ripetuti, -uguali];
+      if (!best || confronta(chiave, best.chiave) < 0 || (confronta(chiave, best.chiave) === 0 && s < best.s)) best = { s, chiave };
+    }
+    return best.s;
+  }
+
+  const confronta = (a, b) => { for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) return a[i] < b[i] ? -1 : 1; return 0; };
+
+  function risolviSigla(cal, v) {
+    if (typeof v !== 'string') return null;
+    const t = v.trim().toLowerCase();
+    return Object.keys(cal.sigle).find(k => k.toLowerCase() === t || cal.sigle[k].toLowerCase() === t) || null;
+  }
+
+  function dispValida(cal, d) {
+    if (!/^[A-Z-]+$/.test(d) || d.length !== cal.ordine_posti.length) return false;
+    const lettere = [...d].filter(c => c !== '-');
+    return lettere.every(c => cal.sigle[c]) && new Set(lettere).size === lettere.length;
+  }
+
+  /* lista grezza (da forzati.json / localStorage) -> Map data -> {data, assenti:[sigle], disposizione|null} */
+  function normalizza(cal, lista) {
+    const scuola = new Set(cal.giorni.map(g => g.data));
+    const mappa = new Map(), scartati = [];
+    for (const v of Array.isArray(lista) ? lista : []) {
+      if (!v || typeof v !== 'object') { scartati.push({ voce: v, motivo: 'voce non valida' }); continue; }
+      if (!scuola.has(v.data)) { scartati.push({ voce: v, motivo: 'non e\' un giorno di scuola' }); continue; }
+      const assenti = [];
+      for (const a of Array.isArray(v.assenti) ? v.assenti : []) {
+        const s = risolviSigla(cal, a);
+        if (s) { if (!assenti.includes(s)) assenti.push(s); } else scartati.push({ voce: v, motivo: 'assente sconosciuto: ' + a });
+      }
+      let disposizione = null;
+      if (typeof v.disposizione === 'string') {
+        const d = v.disposizione.trim().toUpperCase();
+        if (dispValida(cal, d)) disposizione = d; else scartati.push({ voce: v, motivo: 'disposizione non valida: ' + v.disposizione });
+      }
+      if (!assenti.length && !disposizione) { scartati.push({ voce: v, motivo: 'nessun assente indicato' }); continue; }
+      mappa.set(v.data, { data: v.data, assenti, disposizione });
+    }
+    return { mappa, scartati };
+  }
+
+  function calcola(cal, mappa) {
+    const sigle = Object.keys(cal.sigle);
+    const n = cal.ordine_posti.length;
+    const perms = Array.from({ length: n + 1 }, (_, k) => permutazioni(k));
+    const usati = Array.from({ length: n + 1 }, (_, k) => POSTI_IN_USO[k].map(nome => cal.ordine_posti.indexOf(nome)));
+    const cnt = {};
+    sigle.forEach(s => { cnt[s] = Array(cal.ordine_posti.length).fill(0); });
+    let ieri = '-'.repeat(cal.ordine_posti.length);
+    return cal.giorni.map(g => {
+      const f = mappa.get(g.data) || null;
+      let disp, assenti;
+      if (f && f.disposizione) {
+        disp = f.disposizione;
+        assenti = sigle.filter(s => !disp.includes(s));
+      } else {
+        assenti = f ? f.assenti : [];
+        disp = scegli(g.disposizione, assenti, cnt, sigle, perms, usati, ieri);
+      }
+      [...disp].forEach((c, i) => { if (c !== '-') cnt[c][i]++; });
+      ieri = disp;
+      return { data: g.data, giorno: g.giorno, n: g.n_scuola, disp, base: g.disposizione, assenti,
+               forzato: !!f, cambiato: disp !== g.disposizione, ricostruito: !!g.ricostruito };
+    });
+  }
+
+  function crea(cal, lista) {
+    const { mappa, scartati } = normalizza(cal, lista);
+    const giorni = calcola(cal, mappa);
+    return { giorni, indice: new Map(giorni.map((g, i) => [g.data, i])), forzati: mappa, scartati };
+  }
+
+  /* quante volte ciascuno e' stato in ogni posto, dal primo giorno fino a `finoA` incluso */
+  function conteggi(cal, piano, finoA) {
+    const out = {};
+    Object.keys(cal.sigle).forEach(s => { out[s] = Array(cal.ordine_posti.length).fill(0); });
+    let giorni = 0;
+    for (const g of piano.giorni) {
+      if (g.data > finoA) break;
+      giorni++;
+      [...g.disp].forEach((c, i) => { if (c !== '-') out[c][i]++; });
+    }
+    return { conteggi: out, giorni };
+  }
+
+  function motivoNonScuola(cal, iso) {
+    if (cal.sospensioni[iso]) return cal.sospensioni[iso];
+    const wd = giornoSettimana(iso);
+    return wd === 0 || wd === 6 ? 'Weekend' : 'Nessuna lezione';
+  }
+
+  /* cosa mostrare per una data qualunque */
+  function stato(cal, piano, iso) {
+    const gs = piano.giorni;
+    const primo = gs[0], ultimo = gs[gs.length - 1];
+    if (iso < primo.data) return { tipo: 'prima', primo };
+    if (iso > ultimo.data) return { tipo: 'dopo', ultimo };
+    let i = piano.indice.get(iso);
+    let tipo = 'scuola', motivo = null;
+    if (i === undefined) {
+      tipo = 'no-scuola';
+      motivo = motivoNonScuola(cal, iso);
+      i = gs.findIndex(g => g.data > iso);
+    }
+    return { tipo, motivo, giorno: gs[i], prec: i > 0 ? gs[i - 1].data : null, succ: i < gs.length - 1 ? gs[i + 1].data : null };
+  }
+
+  /* massima del giorno: una per data, stessa per tutto il giorno, a rotazione sull'elenco */
+  function massima(lista, iso) {
+    if (!Array.isArray(lista) || !lista.length) return '';
+    const n = lista.length;
+    return lista[((diffDays('2026-09-01', iso) % n) + n) % n];
+  }
+
+  return { massima, addDays, diffDays, giornoSettimana, crea, normalizza, calcola, conteggi, stato, motivoNonScuola, risolviSigla };
+})();
+</script>
+
+<!-- ===================== INTERFACCIA ===================== -->
+<script id="ui">
+(() => {
+  'use strict';
+  const CAL = JSON.parse(document.getElementById('dati-calendario').textContent);
+  const FORZATI_INCORPORATI = JSON.parse(document.getElementById('dati-forzati').textContent);
+  const MASSIME = JSON.parse(document.getElementById('dati-massime').textContent);
+  const VERSIONE_APP = '1.6.0';               // da aggiornare quando si modifica l'app
+  // Firebase Realtime Database (vedi README): es. 'https://NOME-default-rtdb.europe-west1.firebasedatabase.app'
+  // Vuoto = nessuna sincronizzazione: si torna a WhatsApp + forzati.json a mano.
+  const DB_URL = 'https://bam-calendarioauto-default-rtdb.europe-west1.firebasedatabase.app/';
+  const DB = DB_URL.replace(/\/+$/, '');
+  // Accesso con password (Firebase Authentication, vedi README): un utente unico email/password creato in console.
+  // FB_API_KEY = "Chiave API Web" (Impostazioni progetto → Generali). Vuoto = nessuna password (regole del database pubbliche).
+  const FB_API_KEY = 'AIzaSyBPGj3jLKhRkrZ7j8Xf2V-bJlD_OAKLWyo';
+  const AUTH_EMAIL = 'famiglia@calendarioauto.app';   // deve coincidere con l'utente creato e con firebase-rules.json
+  const AUTH_ATTIVA = !!(DB && FB_API_KEY);
+  const LS_AUTH = 'chi-si-siede-dove:accesso:v1';
+  const LS_KEY = 'chi-si-siede-dove:forzati-locali:v1';
+  const LS_REMOTO = 'chi-si-siede-dove:forzati-online:v1';
+  const AZ_ASSENTI = DB ? 'Ricalcola e salva' : 'Ricalcola e avvisa su WhatsApp';
+  const AZ_FORZA = DB ? 'Forza e salva' : 'Forza e avvisa su WhatsApp';
+
+  const GIORNI = ['domenica', 'lunedì', 'martedì', 'mercoledì', 'giovedì', 'venerdì', 'sabato'];
+  const MESI = ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto', 'settembre', 'ottobre', 'novembre', 'dicembre'];
+  const SIGLE = Object.keys(CAL.sigle);
+  const POSTI_BREVI = CAL.ordine_posti.map(p => p.replace('sinistra', 'sx').replace('destra', 'dx'));
+
+  const ICONE = {
+    prev: 'M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z',
+    next: 'M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z',
+    car: 'M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z',
+    month: 'M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z',
+    bars: 'M5 9.2h3V19H5zM10.6 5h2.8v14h-2.8zm5.6 8H19v6h-2.8z',
+    today: 'M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z',
+    print: 'M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z',
+    redo: 'M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z',
+    edit: 'M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z',
+    quote: 'M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z',
+    check: 'M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'
+  };
+  const ico = (n, size) => '<svg viewBox="0 0 24 24" aria-hidden="true"' + (size ? ' width="' + size + '" height="' + size + '"' : '') + '><path d="' + ICONE[n] + '"/></svg>';
+  const VOLANTE = '<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="19" fill="none" stroke="currentColor" stroke-width="5"/><circle cx="24" cy="24" r="5"/><path d="M6 25h13M29 25h13M24 29v15" stroke="currentColor" stroke-width="4" stroke-linecap="round" fill="none"/></svg>';
+
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+  const p2 = n => String(n).padStart(2, '0');
+  const parti = iso => { const [y, m, d] = iso.split('-').map(Number); return { y, m, d, wd: Posti.giornoSettimana(iso) }; };
+  const dataLunga = iso => { const p = parti(iso); return cap(GIORNI[p.wd]) + ' ' + p.d + ' ' + MESI[p.m - 1] + ' ' + p.y; };
+  const dataBreve = iso => { const p = parti(iso); return p.d + ' ' + MESI[p.m - 1].slice(0, 3); };
+  const nome = s => CAL.sigle[s] || s;      // i nomi arrivano da Firebase dopo il login: prima si vede la sigla
+
+  /* ---------- stato ---------- */
+  const params = new URLSearchParams(location.search);
+  const oggiIso = () => {
+    const forzata = params.get('oggi');                       // solo per prove: ?oggi=2026-11-02
+    if (/^\d{4}-\d{2}-\d{2}$/.test(forzata || '')) return forzata;
+    const d = new Date();
+    return d.getFullYear() + '-' + p2(d.getMonth() + 1) + '-' + p2(d.getDate());
+  };
+  const state = {
+    oggi: oggiIso(), data: null, tab: 'giorno', mese: null,
+    file: Array.isArray(FORZATI_INCORPORATI.forzati) ? FORZATI_INCORPORATI.forzati : [],
+    locali: {}, piano: null,
+    // data di ultima modifica di forzati.json: copia incorporata, poi (online) l'intestazione Last-Modified
+    aggiornato: document.querySelector('meta[name="forzati-modificato"]').content
+  };
+  state.data = state.oggi;
+
+  const leggiLocali = () => {
+    try { const v = JSON.parse(localStorage.getItem(LS_KEY) || '{}'); return v && typeof v === 'object' ? v : {}; } catch (e) { return {}; }
+  };
+  const salvaLocali = () => { try { localStorage.setItem(LS_KEY, JSON.stringify(state.locali)); } catch (e) { /* storage non disponibile */ } };
+  state.locali = leggiLocali();
+
+  /* ---------- Firebase Realtime Database: /forzati/<data> = {assenti|disposizione, updatedAt}, /ultimaModifica ---------- */
+  const isoDaMs = ms => { const d = new Date(ms); return d.getFullYear() + '-' + p2(d.getMonth() + 1) + '-' + p2(d.getDate()); };
+  const daDb = db => Object.entries((db && db.forzati) || {}).map(([data, v]) => {
+    const voce = { data };
+    if (v && v.assenti) voce.assenti = Object.values(v.assenti);        // Firebase puo' restituire l'array come oggetto
+    if (v && typeof v.disposizione === 'string') voce.disposizione = v.disposizione;
+    return voce;
+  });
+  // nomi dei bambini: stanno solo in Firebase (/config/sigle), nel codice ci sono solo le sigle
+  const applicaSigle = sigle => {
+    if (!sigle || typeof sigle !== 'object') return;
+    Object.keys(CAL.sigle).forEach(s => { if (typeof sigle[s] === 'string' && sigle[s].trim()) CAL.sigle[s] = sigle[s].trim().slice(0, 30); });
+  };
+  const salvaCache = () => {
+    try { localStorage.setItem(LS_REMOTO, JSON.stringify({ lista: state.file, aggiornato: state.aggiornato, sigle: CAL.sigle })); } catch (e) { /* storage non disponibile */ }
+  };
+
+  /* ---------- accesso con password: Firebase Authentication (REST), utente unico AUTH_EMAIL ---------- */
+  let sessione = null;                       // {id, refresh, scade}: token di accesso, token di rinnovo, scadenza (ms)
+  // codice: 'password' (non autorizzato) | 'troppi' (troppi tentativi) | 'rete' (offline) | 'altro'
+  const erroreAuth = (codice, msg) => Object.assign(new Error(msg || codice), { codice });
+  const salvaSessione = (id, refresh, scadeTra) => {
+    sessione = { id, refresh, scade: Date.now() + (Number(scadeTra) - 60) * 1000 };
+    try { localStorage.setItem(LS_AUTH, JSON.stringify({ refresh })); } catch (e) { /* storage non disponibile */ }
+  };
+  const dimenticaSessione = () => {
+    sessione = null;
+    try { localStorage.removeItem(LS_AUTH); localStorage.removeItem(LS_REMOTO); } catch (e) { /* storage non disponibile */ }
+  };
+  const richiestaAuth = (url, opts) => fetch(url + '?key=' + encodeURIComponent(FB_API_KEY), opts).then(
+    r => r.json().catch(() => ({})).then(j => {
+      if (r.ok) return j;
+      const m = (j.error && j.error.message) || 'HTTP ' + r.status;
+      throw erroreAuth(/^TOO_MANY_ATTEMPTS/.test(m) ? 'troppi' : r.status === 400 ? 'password' : 'altro', m);
+    }),
+    () => { throw erroreAuth('rete'); });
+  const accedi = password => richiestaAuth('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: AUTH_EMAIL, password, returnSecureToken: true })
+  }).then(j => salvaSessione(j.idToken, j.refreshToken, j.expiresIn));
+  const rinnova = () => richiestaAuth('https://securetoken.googleapis.com/v1/token', {
+    method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: 'grant_type=refresh_token&refresh_token=' + encodeURIComponent(sessione.refresh)
+  }).then(j => salvaSessione(j.id_token, j.refresh_token, j.expires_in));
+  const tokenValido = () => !sessione ? Promise.reject(erroreAuth('password', 'nessuna sessione'))
+    : Date.now() < sessione.scade ? Promise.resolve(sessione.id) : rinnova().then(() => sessione.id);
+
+  const gate = document.getElementById('gate');
+  function mostraGate(stato, msg) {          // stato: 'verifica' (attendi) | 'form' (chiede la password)
+    document.querySelectorAll('dialog[open]').forEach(d => d.close());
+    document.body.classList.add('bloccato');
+    gate.hidden = false;
+    document.getElementById('gate-verifica').hidden = stato !== 'verifica';
+    document.getElementById('gate-form').hidden = stato !== 'form';
+    const m = document.getElementById('gate-msg');
+    m.textContent = msg || ''; m.hidden = !msg;
+    if (stato === 'form') { const i = document.getElementById('gate-pwd'); i.value = ''; i.focus(); }
+  }
+  function sblocca() { document.body.classList.remove('bloccato'); gate.hidden = true; }
+
+  // chiamata al database (con il token se serve). Se il database risponde 401/403 la sessione non vale piu':
+  // si dimentica e si torna alla schermata della password.
+  const dbChiama = opts => (AUTH_ATTIVA ? tokenValido().then(t => '?auth=' + encodeURIComponent(t)) : Promise.resolve(''))
+    .then(q => fetch(DB + '/.json' + q, opts))
+    .then(r => {
+      if (r.status === 401 || r.status === 403) throw erroreAuth('password', 'HTTP ' + r.status);
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r;
+    })
+    .catch(e => {
+      if (AUTH_ATTIVA && e.codice === 'password') { dimenticaSessione(); mostraGate('form', 'Non autorizzato: sessione scaduta, inserisci di nuovo la password.'); }
+      throw e;
+    });
+  // voce = {data, assenti|disposizione}; null = cancella il giorno. Un solo PATCH atomico (data + ultima modifica).
+  const dbAggiorna = (data, voce) => {
+    const nodo = voce && { updatedAt: { '.sv': 'timestamp' } };
+    if (voce) { if (voce.disposizione) nodo.disposizione = voce.disposizione; else nodo.assenti = voce.assenti; }
+    const corpo = { ['forzati/' + data]: nodo, ultimaModifica: { '.sv': 'timestamp' } };
+    return dbChiama({ method: 'PATCH', body: JSON.stringify(corpo) }).then(() => undefined);
+  };
+  if (DB) {                                  // ultima copia scaricata: l'app parte subito anche senza rete
+    try {
+      const c = JSON.parse(localStorage.getItem(LS_REMOTO) || 'null');
+      if (c && Array.isArray(c.lista)) { state.file = c.lista; if (c.aggiornato) state.aggiornato = c.aggiornato; applicaSigle(c.sigle); }
+    } catch (e) { /* cache assente o rovinata */ }
+  }
+
+  const chiave = v => (v.assenti || []).map(a => Posti.risolviSigla(CAL, a)).filter(Boolean).sort().join('');
+  // elenco effettivo: il file, sovrascritto dalle forzature fatte su questo telefono
+  const elenco = locali => {
+    const m = new Map();
+    state.file.forEach(v => v && m.set(v.data, v));
+    Object.values(locali).forEach(v => m.set(v.data, v));
+    return [...m.values()];
+  };
+  const ricalcola = () => { state.piano = Posti.crea(CAL, elenco(state.locali)); };
+  const nelFile = data => state.file.some(v => v && v.data === data);
+  // un giorno si puo' ripristinare se e' forzato solo su questo telefono o (con il database) anche online
+  const ripristinabile = data => !!state.locali[data] || (!!DB && nelFile(data));
+  const pulisciLocali = () => {          // una forzatura locale gia' importata nel file non serve piu'
+    let cambiato = false;
+    state.file.forEach(v => {
+      const l = v && state.locali[v.data];
+      if (!l) return;
+      const stessiAssenti = l.assenti && l.assenti.length && !v.disposizione && chiave(l) === chiave(v);
+      const stessiPosti = l.disposizione && v.disposizione && String(v.disposizione).toUpperCase() === l.disposizione;
+      if (stessiAssenti || stessiPosti) { delete state.locali[v.data]; cambiato = true; }
+    });
+    if (cambiato) salvaLocali();
+  };
+
+  const primaData = () => state.piano.giorni[0].data;
+  const ultimaData = () => state.piano.giorni[state.piano.giorni.length - 1].data;
+  const statoCorrente = () => Posti.stato(CAL, state.piano, state.data);
+  const giornoMostrato = () => { const st = statoCorrente(); return st.giorno || null; };
+
+  /* ---------- componenti ---------- */
+  function riga(g) {
+    return [...g.disp].map((c, i) => '<span class="p">' + esc(POSTI_BREVI[i]) + ': <b>' + (c === '-' ? 'vuoto' : esc(nome(c))) + '</b></span>')
+      .join('<span class="sep"> · </span> ');
+  }
+  function rigaPiana(g) { return [...g.disp].map((c, i) => POSTI_BREVI[i] + ' ' + (c === '-' ? '(vuoto)' : nome(c))).join(' · '); }
+
+  function posto(c, i) {
+    if (c === '-') return '<div class="seat empty"><span class="pos">' + esc(POSTI_BREVI[i]) + '</span><span class="nm">Vuoto</span></div>';
+    return '<div class="seat occ k-' + c + '"><span class="pos">' + esc(POSTI_BREVI[i]) + '</span><span class="av">' + esc(c) +
+      '</span><span class="nm">' + esc(nome(c)) + '</span></div>';
+  }
+  function auto(g) {
+    const d = [...g.disp];
+    return '<div class="car">' +
+      '<i class="tyre fl"></i><i class="tyre fr"></i><i class="tyre rl"></i><i class="tyre rr"></i>' +
+      '<div class="body"><div class="hood"><i></i><i></i></div><div class="glass"></div>' +
+      '<div class="seats">' +
+        '<div class="seat driver"><span class="pos">Guida</span>' + VOLANTE + '<span class="nm">conducente</span></div>' +
+        '<div class="console"></div>' + posto(d[0], 0) +
+        posto(d[1], 1) + posto(d[2], 2) + posto(d[3], 3) +
+      '</div><div class="trunk"></div></div></div>';
+  }
+
+  function testataGiorno(g, st) {
+    const p = parti(g.data);
+    const chips = ['<button class="chip' + (state.data === state.oggi ? ' on' : '') + '" data-azione="oggi">' + ico('today', 18) + 'Oggi</button>',
+                   '<span class="chip">Giorno di scuola n° ' + g.n + '</span>'];
+    if (g.forzato) chips.push('<span class="chip warn">' + (g.assenti.length ? 'Assenti: ' + esc(g.assenti.map(nome).join(', ')) : 'Posti forzati') + '</span>');
+    else if (g.cambiato) chips.push('<span class="chip warn">Ricalcolato</span>');
+    if (g.ricostruito) chips.push('<span class="chip">Storico ricostruito</span>');
+    return '<div class="dayhead">' +
+      '<button class="icon-btn" data-vai="' + (st.prec || '') + '" aria-label="Giorno precedente"' + (st.prec ? '' : ' disabled') + '>' + ico('prev') + '</button>' +
+      '<div><div class="wd">' + esc(cap(GIORNI[p.wd])) + '</div><div class="dt">' + p.d + ' ' + MESI[p.m - 1] + ' ' + p.y + '</div></div>' +
+      '<button class="icon-btn" data-vai="' + (st.succ || '') + '" aria-label="Giorno successivo"' + (st.succ ? '' : ' disabled') + '>' + ico('next') + '</button>' +
+      '</div><div class="chips">' + chips.join('') + '</div>';
+  }
+
+  function cardMassima() {
+    const t = Posti.massima(MASSIME, state.data);
+    return t ? '<div class="maxim"><div class="cap">' + ico('quote') + 'Massima del giorno per l\'autista</div><blockquote>' + esc(t) + '</blockquote></div>' : '';
+  }
+
+  function vistaGiorno() {
+    const st = statoCorrente();
+    let h = '';
+    if (st.tipo === 'prima') {
+      h = '<div class="msg"><h2>Non è ancora iniziata la scuola</h2><p>Il calendario dei posti parte ' + esc(dataLunga(st.primo.data).toLowerCase()) + '.</p>' +
+          '<button class="btn filled" data-vai="' + st.primo.data + '">' + ico('next') + 'Vai al primo giorno</button></div>' +
+          '<div class="chips"><button class="chip" data-azione="oggi">' + ico('today', 18) + 'Oggi</button></div>' + cardMassima();
+    } else if (st.tipo === 'dopo') {
+      h = '<div class="msg"><h2>L\'anno scolastico è finito</h2><p>L\'ultimo giorno di scuola è ' + esc(dataLunga(st.ultimo.data).toLowerCase()) + '. Buone vacanze!</p>' +
+          '<button class="btn filled" data-vai="' + st.ultimo.data + '">' + ico('prev') + 'Vai all\'ultimo giorno</button></div>' +
+          '<div class="chips"><button class="chip" data-azione="oggi">' + ico('today', 18) + 'Oggi</button></div>' + cardMassima();
+    } else {
+      const g = st.giorno;
+      if (st.tipo === 'no-scuola') {
+        const eOggi = state.data === state.oggi;
+        const quando = eOggi ? 'Oggi non c\'è scuola' : 'Quel giorno non c\'è scuola';
+        const d = Posti.diffDays(state.data, g.data);
+        const tra = eOggi ? (d === 1 ? ' — domani' : ' — tra ' + d + ' giorni') : '';
+        h = '<div class="banner"><div class="t">' + quando + '</div><div class="d">' + esc(dataLunga(state.data)) + '</div>' +
+            '<div class="m">' + esc(Posti.motivoNonScuola(CAL, state.data)) + '</div></div>' +
+            '<div class="next-card"><div class="lbl">Prossimo giorno di scuola' + esc(tra) + '</div>' +
+            testataGiorno(g, st) + auto(g) + '<div class="line">' + riga(g) + '</div></div>';
+      } else {
+        h = testataGiorno(g, st) + auto(g) + '<div class="line">' + riga(g) + '</div>';
+      }
+      h += cardMassima() + '<div class="actions duo">' +
+        '<button class="btn tile filled" data-azione="assenti">' + ico('redo') + 'Ricalcola con assenti</button>' +
+        '<button class="btn tile tonal" data-azione="forza">' + ico('edit') + 'Forza disposizione</button></div>';
+    }
+    document.getElementById('view-giorno').innerHTML = h;
+  }
+
+  /* ---------- mese ---------- */
+  const meseChiave = iso => iso.slice(0, 7);
+  const meseMin = () => meseChiave(primaData());
+  const meseMax = () => meseChiave(ultimaData());
+  const meseSuccessivo = (k, n) => { const [y, m] = k.split('-').map(Number); const t = y * 12 + (m - 1) + n; return Math.floor(t / 12) + '-' + p2(t % 12 + 1); };
+  const clampMese = k => (k < meseMin() ? meseMin() : k > meseMax() ? meseMax() : k);
+
+  function mini(g) {
+    const d = [...g.disp];
+    const chip = (c, i) => c === '-' ? '<i class="emp"></i>' : '<i class="k-' + c + '">' + esc(c) + '</i>';
+    return '<span class="mini"><i class="drv"></i><i class="gap"></i>' + chip(d[0], 0) + chip(d[1], 1) + chip(d[2], 2) + chip(d[3], 3) + '</span>';
+  }
+
+  function vistaMese() {
+    const [y, m] = state.mese.split('-').map(Number);
+    const primo = y + '-' + p2(m) + '-01';
+    const nGiorni = new Date(Date.UTC(y, m, 0)).getUTCDate();
+    const offset = (parti(primo).wd + 6) % 7;                    // lunedi' = 0
+    let celle = '', scuola = 0;
+    for (let i = 0; i < offset; i++) celle += '<span class="cell blank"></span>';
+    const sosp = [];
+    for (let d = 1; d <= nGiorni; d++) {
+      const iso = y + '-' + p2(m) + '-' + p2(d);
+      const st = Posti.stato(CAL, state.piano, iso);
+      const wd = parti(iso).wd;
+      const cls = ['cell'];
+      if (iso === state.oggi) cls.push('today');
+      if (iso === state.data) cls.push('sel');
+      let corpo = '', aria = dataLunga(iso);
+      if (st.tipo === 'scuola') {
+        scuola++;
+        corpo = mini(st.giorno);
+        aria += ': ' + rigaPiana(st.giorno);
+      } else if (CAL.sospensioni[iso]) {
+        cls.push('susp'); corpo = '<span class="no">No scuola</span>'; sosp.push(iso); aria += ': ' + CAL.sospensioni[iso];
+      } else {
+        cls.push('off'); if (wd !== 0 && wd !== 6) corpo = '<span class="no">—</span>';
+        aria += st.tipo === 'no-scuola' ? ': ' + Posti.motivoNonScuola(CAL, iso) : ': fuori dal calendario';
+      }
+      celle += '<button class="' + cls.join(' ') + '" data-vai="' + iso + '" aria-label="' + esc(aria) + '"><span class="num">' + d + '</span>' + corpo + '</button>';
+    }
+    const legenda = SIGLE.map(s => '<span class="k-' + s + '"><i>' + esc(s) + '</i>' + esc(nome(s)) + '</span>').join('') +
+      '<span><i class="d"></i>Guida</span>';
+    const elSosp = sosp.length
+      ? '<ul>' + sosp.map(iso => '<li><b>' + dataBreve(iso) + '</b><span class="grow">' + esc(CAL.sospensioni[iso]) + '</span></li>').join('') + '</ul>'
+      : '<p>Nessuna chiusura straordinaria questo mese.</p>';
+    const titolo = cap(MESI[m - 1]) + ' ' + y;
+    document.getElementById('view-mese').innerHTML =
+      '<div class="print-only">Chi si siede dove? — posti in macchina a.s. 2026/27</div>' +
+      '<div class="monthbar"><button class="icon-btn no-print" data-mese="-1" aria-label="Mese precedente"' + (state.mese <= meseMin() ? ' disabled' : '') + '>' + ico('prev') + '</button>' +
+      '<h2>' + esc(titolo) + '<span class="sub">' + scuola + ' giorni di scuola</span></h2>' +
+      '<button class="icon-btn no-print" data-mese="1" aria-label="Mese successivo"' + (state.mese >= meseMax() ? ' disabled' : '') + '>' + ico('next') + '</button></div>' +
+      '<div class="wdays"><span>L</span><span>M</span><span>M</span><span>G</span><span>V</span><span>S</span><span>D</span></div>' +
+      '<div class="grid7" id="griglia">' + celle + '</div>' +
+      '<div class="legend">' + legenda + '</div>' +
+      '<p class="hint">Ogni casella mostra la macchina dall\'alto: in alto a destra chi sta Avanti, sotto i tre posti dietro (sx · centro · dx). Tocca un giorno per vederlo grande. Scorri a destra/sinistra per cambiare mese.</p>' +
+      '<div class="card"><h3>Chiusure del mese</h3>' + elSosp + '</div>' +
+      '<div class="actions no-print" style="margin-top:16px">' +
+        (meseChiave(state.oggi) !== state.mese && meseChiave(state.oggi) >= meseMin() && meseChiave(state.oggi) <= meseMax()
+          ? '<button class="btn tonal" data-azione="mese-oggi">' + ico('today') + 'Vai al mese di oggi</button>' : '') +
+        '<button class="btn tonal" data-azione="stampa">' + ico('print') + 'Stampa questo mese</button></div>';
+  }
+
+  /* ---------- equita' ---------- */
+  function vistaStat() {
+    const fine = state.oggi > ultimaData() ? ultimaData() : state.oggi;
+    const { conteggi, giorni } = Posti.conteggi(CAL, state.piano, fine);
+    let maxDiff = 0;
+    const righe = SIGLE.map(s => {
+      const v = conteggi[s];
+      maxDiff = Math.max(maxDiff, Math.max(...v) - Math.min(...v));
+      return '<tr class="k-' + s + '"><td class="who"><i></i>' + esc(nome(s)) + '</td>' + v.map(n => '<td>' + n + '</td>').join('') +
+        '<td class="tot">' + v.reduce((a, b) => a + b, 0) + '</td></tr>';
+    }).join('');
+    const sotto = giorni === 0 ? 'La scuola non è ancora iniziata: tutti a zero.'
+      : 'Dal ' + dataBreve(primaData()) + ' fino a ' + (fine === state.oggi ? 'oggi' : 'fine anno') + ' (' + dataBreve(fine) + '): ' + giorni + ' giorni di scuola.';
+    const ricos = state.piano.giorni.filter(g => g.ricostruito && g.data <= fine);
+    const notaRicos = ricos.length ? ' I giorni fino al ' + dataBreve(ricos[ricos.length - 1].data) + ' sono ricostruiti in modo equo.' : '';
+    const verdetto = maxDiff === 0 ? 'Tutto perfettamente pari: ognuno è stato in ogni posto lo stesso numero di volte.'
+      : 'Differenza massima tra due posti dello stesso bambino: ' + maxDiff + (maxDiff === 1 ? ' volta.' : ' volte.');
+
+    const righeF = [...state.piano.forzati.values()].sort((a, b) => a.data < b.data ? -1 : 1).map(f => {
+      const loc = !!state.locali[f.data];
+      const chi = f.disposizione && !f.assenti.length ? 'posti forzati a mano' : 'assente: ' + f.assenti.map(nome).join(', ');
+      const dove = loc ? 'solo su questo telefono' : DB ? 'salvato online' : 'da forzati.json';
+      return '<li><b>' + dataBreve(f.data) + '</b><span class="grow">' + esc(chi) + '<br><small>' + dove + '</small></span>' +
+        (loc && DB ? '<button class="btn text" data-salva="' + f.data + '">Salva online</button>' : '') +
+        (ripristinabile(f.data) ? '<button class="btn text" data-ripristina="' + f.data + '">Ripristina</button>' : '') + '</li>';
+    }).join('');
+    const origine = DB ? 'dei dati online' : 'di forzati.json';
+    const scartati = state.piano.scartati.length
+      ? '<p style="margin-top:8px;color:var(--err)">' + state.piano.scartati.length + ' voci ' + origine + ' ignorate (dettagli nella console del browser).</p>' : '';
+    if (state.piano.scartati.length) console.warn('Forzati - voci ignorate:', state.piano.scartati);
+
+    document.getElementById('view-stat').innerHTML =
+      '<h2>Quante volte in ogni posto</h2><p class="sub">' + esc(sotto + notaRicos) + '</p>' +
+      '<div class="tblwrap"><table><thead><tr><th></th>' + CAL.ordine_posti.map(p => '<th>' + esc(p).replace('Dietro ', 'Dietro<br>') + '</th>').join('') +
+      '<th>Totale</th></tr></thead><tbody>' + righe + '</tbody></table></div>' +
+      '<div class="verdict">' + esc(verdetto) + '</div>' +
+      '<div class="card"><h3>Giorni con assenti</h3>' + (righeF ? '<ul>' + righeF + '</ul>' : '<p>Nessuno: il calendario è quello originale.</p>') + scartati + '</div>';
+  }
+
+  /* ---------- render & navigazione ---------- */
+  const dataCorta = iso => { const [y, m, d] = iso.split('-'); return d + '/' + m + '/' + y.slice(2); };
+  function aggiornaAppbar() {
+    const agg = /^\d{4}-\d{2}-\d{2}$/.test(state.aggiornato) ? state.aggiornato : '';
+    document.getElementById('appbar-sub').innerHTML = '<span>A.s. 2026/27</span>' + (agg ? ' · <span>agg. ' + dataCorta(agg) + '</span>' : '') +
+      ' · <span>v' + esc(VERSIONE_APP) + '</span>';
+  }
+
+  function render() {
+    aggiornaAppbar();
+    vistaGiorno(); vistaMese(); vistaStat();
+    ['giorno', 'mese', 'stat'].forEach(t => {
+      document.getElementById('view-' + t).hidden = state.tab !== t;
+      const b = document.querySelector('[data-tab="' + t + '"]');
+      if (state.tab === t) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
+    });
+  }
+  function vai(iso, tab) {
+    state.data = iso;
+    const g = giornoMostrato();
+    state.mese = clampMese(meseChiave(g ? g.data : iso));
+    state.tab = tab || 'giorno';
+    render();
+    window.scrollTo(0, 0);
+  }
+  const vaiOggi = () => vai(state.oggi, 'giorno');
+
+  /* ---------- dialog "Ricalcola con assenti" ---------- */
+  const dlg = document.getElementById('dlg');
+  let dlgData = null;
+
+  const selezionati = () => [...dlg.querySelectorAll('#dlg-kids input:checked')].map(i => i.value);
+  function aggiornaDialog() {
+    const sel = selezionati();
+    const ok = document.getElementById('dlg-ok');
+    const note = document.getElementById('dlg-note');
+    const prev = document.getElementById('dlg-prev');
+    const rip = ripristinabile(dlgData);
+    note.hidden = true;
+    if (sel.length === 0) {
+      ok.textContent = rip ? 'Ripristina il giorno' : AZ_ASSENTI;
+      ok.disabled = !rip;
+      prev.hidden = true;
+      if (!rip && nelFile(dlgData)) { note.textContent = 'Questo giorno è forzato in forzati.json: per toglierlo cancella la riga nel file.'; note.hidden = false; }
+      return;
+    }
+    if (sel.length === SIGLE.length) {
+      ok.disabled = true; ok.textContent = AZ_ASSENTI;
+      note.textContent = 'Deve esserci almeno un bambino presente.'; note.hidden = false; prev.hidden = true; return;
+    }
+    ok.disabled = false; ok.textContent = AZ_ASSENTI;
+    const ipotesi = Object.assign({}, state.locali, { [dlgData]: { data: dlgData, assenti: sel } });
+    const piano = Posti.crea(CAL, elenco(ipotesi));
+    prev.innerHTML = '<span class="t">Come diventa il giorno</span>' + riga(piano.giorni[piano.indice.get(dlgData)]);
+    prev.hidden = false;
+  }
+  function apriDialog() {
+    const g = giornoMostrato();
+    if (!g) return;
+    dlgData = g.data;
+    const f = state.piano.forzati.get(g.data);
+    const attuali = f && !f.disposizione ? f.assenti : [];
+    document.getElementById('dlg-when').textContent = dataLunga(g.data);
+    document.getElementById('dlg-kids').innerHTML = SIGLE.map(s =>
+      '<label class="kid k-' + s + '"><input type="checkbox" value="' + s + '"' + (attuali.includes(s) ? ' checked' : '') + '><span>' + ico('check') + esc(nome(s)) + '</span></label>').join('');
+    aggiornaDialog();
+    dlg.showModal();
+  }
+  // apre WhatsApp con la riga da incollare in forzati.json (voce = {data, assenti:[nomi]} oppure {data, disposizione})
+  function apriWA(voce) {
+    const g = state.piano.giorni[state.piano.indice.get(voce.data)];
+    const righe = ['Chi si siede dove? - giorno forzato da importare in forzati.json', '', 'Giorno: ' + dataLunga(g.data).toLowerCase()];
+    if (voce.assenti) righe.push('Assenti: ' + voce.assenti.map(nome).join(', '), 'Posti ricalcolati: ' + rigaPiana(g));
+    else righe.push('Disposizione forzata a mano: ' + rigaPiana(g));
+    righe.push('', 'Da incollare nell\'elenco "forzati":', JSON.stringify(voce));
+    const url = 'https://wa.me/?text=' + encodeURIComponent(righe.join('\n'));   // senza numero: scegli tu il contatto
+    if (!window.open(url, '_blank', 'noopener')) location.href = url;   // popup bloccato: apri nella stessa scheda
+  }
+  /* Salva una forzatura per tutti i dispositivi. La copia locale (visibile subito) resta finche' il salvataggio non riesce,
+     cosi' se sei offline il giorno resta "solo su questo telefono" e si puo' riprovare da Statistiche. */
+  let scritture = 0;   // ogni scrittura la incrementa: una lettura partita prima non deve sovrascrivere il risultato
+  function pubblica(voce) {
+    if (!DB) {
+      snack((voce.assenti ? 'Ricalcolato: assente ' + voce.assenti.map(nome).join(', ') : 'Disposizione forzata') + '. Apro WhatsApp…');
+      apriWA(voce);
+      return;
+    }
+    snack('Salvo online…');
+    scritture++;
+    dbAggiorna(voce.data, voce).then(() => {
+      scritture++;
+      state.file = state.file.filter(v => !v || v.data !== voce.data).concat([voce]);
+      if (state.locali[voce.data] === voce) { delete state.locali[voce.data]; salvaLocali(); }
+      state.aggiornato = isoDaMs(Date.now());
+      salvaCache(); ricalcola(); render();
+      snack('Salvato: lo vedono tutti i dispositivi');
+    }).catch(() => snack('Non riesco a salvare online: il giorno resta solo su questo telefono. Puoi riprovare da Statistiche.'));
+  }
+  // torna al calendario originale per quel giorno (anche online, se c'e' il database)
+  function ripristina(data) {
+    delete state.locali[data]; salvaLocali();
+    if (!(DB && nelFile(data))) { ricalcola(); render(); snack('Giorno ripristinato'); return; }
+    const prima = state.file;
+    state.file = prima.filter(v => !v || v.data !== data);
+    ricalcola(); render(); snack('Ripristino online…');
+    scritture++;
+    dbAggiorna(data, null).then(() => {
+      scritture++;
+      state.aggiornato = isoDaMs(Date.now());
+      salvaCache(); snack('Giorno ripristinato per tutti i dispositivi');
+    }).catch(() => { state.file = prima; ricalcola(); render(); snack('Non riesco a ripristinare online: riprova più tardi.'); });
+  }
+  function confermaDialog() {
+    const sel = selezionati();
+    if (sel.length === 0) { dlg.close(); ripristina(dlgData); return; }
+    if (sel.length === SIGLE.length) return;
+    const voce = { data: dlgData, assenti: sel };
+    state.locali[dlgData] = voce;
+    salvaLocali(); ricalcola(); dlg.close(); render();
+    pubblica(voce);
+  }
+
+  /* ---------- dialog "Forza disposizione" ---------- */
+  const dlgF = document.getElementById('dlgf');
+  let forzaData = null, forza = [];
+  const selectPosti = () => [...dlgF.querySelectorAll('#dlgf-sel select')];
+
+  function disegnaForza() {
+    document.getElementById('dlgf-sel').innerHTML = CAL.ordine_posti.map((p, i) =>
+      '<label><span>' + esc(p) + '</span><select data-pos="' + i + '" aria-label="' + esc(p) + '">' +
+      ['-'].concat(SIGLE).map(c => '<option value="' + c + '">' + (c === '-' ? 'Assente' : esc(nome(c))) + '</option>').join('') + '</select></label>').join('');
+    aggiornaForza();
+  }
+  function aggiornaForza() {
+    selectPosti().forEach((el, i) => { el.value = forza[i]; el.className = forza[i] === '-' ? '' : 'k-' + forza[i]; });
+    const g = state.piano.giorni[state.piano.indice.get(forzaData)];
+    const ok = document.getElementById('dlgf-ok'), note = document.getElementById('dlgf-note');
+    const disp = forza.join('');
+    note.hidden = false;
+    if (forza.every(c => c === '-')) { ok.disabled = true; note.textContent = 'Deve esserci almeno un bambino in macchina.'; }
+    else if (disp === g.disp) { ok.disabled = true; note.textContent = 'È già questa la disposizione del giorno: cambia qualche posto.'; }
+    else {
+      const assenti = SIGLE.filter(c => !forza.includes(c)).map(nome);
+      ok.disabled = false;
+      note.textContent = (assenti.length ? 'Assenti: ' + assenti.join(', ') + '. ' : 'Nessun assente. ') +
+        'Se scegli un bambino già seduto altrove, i due si scambiano. I giorni successivi vengono ricalcolati per l\'equità.';
+    }
+  }
+  function apriForza() {
+    const g = giornoMostrato();
+    if (!g) return;
+    forzaData = g.data;
+    forza = [...g.disp];
+    document.getElementById('dlgf-when').textContent = dataLunga(g.data);
+    document.getElementById('dlgf-ripr').hidden = !ripristinabile(g.data);
+    disegnaForza();
+    dlgF.showModal();
+  }
+  function confermaForza() {
+    if (document.getElementById('dlgf-ok').disabled) return;
+    const voce = { data: forzaData, disposizione: forza.join('') };
+    state.locali[forzaData] = voce;
+    salvaLocali(); ricalcola(); dlgF.close(); render();
+    pubblica(voce);
+  }
+
+  let snackTimer = null;
+  function snack(testo) {
+    const el = document.getElementById('snack');
+    el.textContent = testo; el.hidden = false;
+    clearTimeout(snackTimer); snackTimer = setTimeout(() => { el.hidden = true; }, 5000);
+  }
+
+  /* ---------- eventi ---------- */
+  document.addEventListener('click', e => {
+    const t = e.target.closest('button');
+    if (!t || t.disabled) return;
+    if (t.dataset.tab) { state.tab = t.dataset.tab; render(); window.scrollTo(0, 0); return; }
+    if (t.dataset.vai !== undefined) { if (t.dataset.vai) vai(t.dataset.vai); return; }
+    if (t.dataset.mese) { state.mese = clampMese(meseSuccessivo(state.mese, Number(t.dataset.mese))); render(); return; }
+    if (t.dataset.ripristina) { ripristina(t.dataset.ripristina); return; }
+    if (t.dataset.salva) { const v = state.locali[t.dataset.salva]; if (v) pubblica(v); return; }
+    switch (t.dataset.azione) {
+      case 'oggi': vaiOggi(); break;
+      case 'mese-oggi': state.mese = clampMese(meseChiave(state.oggi)); render(); break;
+      case 'assenti': apriDialog(); break;
+      case 'forza': apriForza(); break;
+      case 'stampa': window.print(); break;
+    }
+  });
+  document.getElementById('dlg-kids').addEventListener('change', aggiornaDialog);
+  document.getElementById('dlg-annulla').addEventListener('click', () => dlg.close());
+  document.getElementById('dlg-ok').addEventListener('click', confermaDialog);
+  dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });   // tocco sullo sfondo
+  document.getElementById('dlgf-sel').addEventListener('change', e => {
+    const i = Number(e.target.dataset.pos), v = e.target.value;
+    if (v !== '-') { const j = forza.indexOf(v); if (j !== -1 && j !== i) forza[j] = forza[i]; }   // scambio
+    forza[i] = v;
+    aggiornaForza();
+  });
+  document.getElementById('dlgf-annulla').addEventListener('click', () => dlgF.close());
+  document.getElementById('dlgf-ok').addEventListener('click', confermaForza);
+  document.getElementById('dlgf-ripr').addEventListener('click', () => { dlgF.close(); ripristina(forzaData); });
+  dlgF.addEventListener('click', e => { if (e.target === dlgF) dlgF.close(); });
+
+  // scorrimento orizzontale per cambiare mese
+  let sx = 0, sy = 0;
+  const vm = document.getElementById('view-mese');
+  vm.addEventListener('touchstart', e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+  vm.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) < 70 || Math.abs(dy) > 45) return;
+    const nuovo = clampMese(meseSuccessivo(state.mese, dx < 0 ? 1 : -1));
+    if (nuovo !== state.mese) { state.mese = nuovo; render(); }
+  }, { passive: true });
+
+  // se l'app resta aperta oltre la mezzanotte, torna a "oggi"
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden || params.get('oggi')) return;
+    const n = oggiIso();
+    if (n !== state.oggi) { const seguiva = state.data === state.oggi; state.oggi = n; if (seguiva) state.data = n; render(); }
+  });
+
+  /* ---------- avvio ---------- */
+  document.querySelectorAll('[data-icon]').forEach(el => { el.innerHTML = ico(el.dataset.icon, 24); });
+  document.getElementById('logo').innerHTML = ico('car', 26);
+  pulisciLocali();
+  ricalcola();
+  state.mese = clampMese(meseChiave(state.oggi));
+  const tab = params.get('tab');
+  if (tab === 'mese' || tab === 'stat') state.tab = tab;
+  render();
+
+  document.getElementById('dlgf-ok').textContent = AZ_FORZA;
+
+  // Con il database: legge i forzati online (all'avvio e ogni volta che l'app torna in primo piano).
+  // Se offline resta l'ultima copia scaricata.
+  function caricaDb() {
+    const v0 = scritture;
+    return dbChiama({ cache: 'no-store' }).then(r => r.json()).then(db => {
+      if (v0 !== scritture) return;            // nel frattempo hai salvato qualcosa: questa lettura e' gia' vecchia
+      state.file = daDb(db);
+      applicaSigle(db && db.config && db.config.sigle);
+      if (db && db.ultimaModifica) state.aggiornato = isoDaMs(db.ultimaModifica);
+      salvaCache(); pulisciLocali(); ricalcola(); render();
+    });
+  }
+  const avviaConDb = () => { sblocca(); render(); caricaDb().catch(() => { /* offline: si usa l'ultima copia */ }); };
+  const messaggioAccesso = e =>
+    e.codice === 'password' ? 'Non autorizzato: password errata.'
+    : e.codice === 'troppi' ? 'Troppi tentativi: riprova tra qualche minuto.'
+    : e.codice === 'rete' ? 'Connessione assente: non riesco a verificare la password.'
+    : 'Accesso non riuscito (' + e.message + ').';
+  function erroreAccesso(e) {
+    console.warn('Accesso:', e.message);
+    if (e.codice === 'password') dimenticaSessione();
+    mostraGate('form', messaggioAccesso(e));
+  }
+  function provaAccesso(password) {
+    mostraGate('verifica');
+    return accedi(password).then(avviaConDb, erroreAccesso);
+  }
+  // Password: da ?pwd=... (poi tolta dall'indirizzo), altrimenti dall'accesso gia' fatto su questo telefono, altrimenti la chiede.
+  function accessoIniziale() {
+    mostraGate('verifica');
+    const pwd = params.get('pwd');
+    if (pwd) {
+      try { const u = new URL(location.href); u.searchParams.delete('pwd'); history.replaceState(null, '', u); } catch (e) { /* file:// o simili */ }
+      provaAccesso(pwd);
+      return;
+    }
+    let salvato = null;
+    try { salvato = JSON.parse(localStorage.getItem(LS_AUTH) || 'null'); } catch (e) { /* storage non disponibile */ }
+    if (!salvato || !salvato.refresh) { mostraGate('form'); return; }
+    sessione = { id: '', refresh: salvato.refresh, scade: 0 };
+    rinnova().then(avviaConDb, e => {
+      let cache = null;
+      try { cache = localStorage.getItem(LS_REMOTO); } catch (x) { /* storage non disponibile */ }
+      if (e.codice === 'rete' && cache) avviaConDb();      // offline: su questo telefono l'accesso era gia' stato fatto
+      else erroreAccesso(e);
+    });
+  }
+  document.getElementById('gate-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const p = document.getElementById('gate-pwd').value;
+    if (p) provaAccesso(p);
+  });
+  if (DB) {
+    if (AUTH_ATTIVA) accessoIniziale(); else caricaDb().catch(() => { /* offline: si usa l'ultima copia */ });
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden && !document.body.classList.contains('bloccato')) caricaDb().catch(() => {});
+    });
+  }
+
+  // Senza database: quando la pagina e' su GitHub Pages legge forzati.json aggiornato (se offline/file:// resta la copia incorporata)
+  else if (/^https?:$/.test(location.protocol)) {
+    fetch('forzati.json', { cache: 'no-store' }).then(r => {
+      if (!r.ok) return null;
+      const lm = new Date(r.headers.get('Last-Modified') || NaN);
+      if (!isNaN(lm)) state.aggiornato = lm.getFullYear() + '-' + p2(lm.getMonth() + 1) + '-' + p2(lm.getDate());
+      return r.json();
+    }).then(j => {
+      if (!j || !Array.isArray(j.forzati)) return;
+      state.file = j.forzati;
+      pulisciLocali(); ricalcola(); render();
+    }).catch(() => { /* offline: si usa la copia incorporata */ });
+  }
+})();
+</script>
+</body>
+</html>

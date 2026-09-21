@@ -1,0 +1,1752 @@
+{
+ "ordine_posti": [
+  "Avanti",
+  "Dietro sinistra",
+  "Centro",
+  "Dietro destra"
+ ],
+ "sigle": {
+  "O": "O",
+  "L": "L",
+  "A": "A",
+  "M": "M"
+ },
+ "sabato_a_scuola": false,
+ "sospensioni": {
+  "2026-10-30": "Recupero anticipo inizio anno",
+  "2026-11-02": "Commemorazione dei defunti",
+  "2026-12-07": "Ponte Immacolata",
+  "2026-12-08": "Immacolata Concezione",
+  "2026-12-23": "Festività natalizie",
+  "2026-12-24": "Festività natalizie",
+  "2026-12-25": "Natale",
+  "2026-12-26": "Santo Stefano",
+  "2026-12-28": "Festività natalizie",
+  "2026-12-29": "Festività natalizie",
+  "2026-12-30": "Festività natalizie",
+  "2026-12-31": "Festività natalizie",
+  "2027-01-01": "Capodanno",
+  "2027-01-02": "Festività natalizie",
+  "2027-01-04": "Festività natalizie",
+  "2027-01-05": "Festività natalizie",
+  "2027-01-06": "Epifania",
+  "2027-02-08": "Carnevale",
+  "2027-02-09": "Carnevale",
+  "2027-02-10": "Recupero anticipo inizio anno",
+  "2027-03-25": "Festività pasquali",
+  "2027-03-26": "Festività pasquali",
+  "2027-03-27": "Festività pasquali",
+  "2027-03-29": "Lunedì dell'Angelo",
+  "2027-03-30": "Festività pasquali",
+  "2027-04-25": "Festa della Liberazione",
+  "2027-04-30": "Recupero anticipo inizio anno",
+  "2027-05-01": "Festa del Lavoro",
+  "2027-06-02": "Festa della Repubblica"
+ },
+ "giorni": [
+  {
+   "data": "2026-09-10",
+   "giorno": "gio",
+   "n_scuola": 1,
+   "disposizione": "OMLA",
+   "ricostruito": true,
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2026-09-11",
+   "giorno": "ven",
+   "n_scuola": 2,
+   "disposizione": "LAOM",
+   "ricostruito": true,
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2026-09-14",
+   "giorno": "lun",
+   "n_scuola": 3,
+   "disposizione": "MLAO",
+   "ricostruito": true,
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2026-09-15",
+   "giorno": "mar",
+   "n_scuola": 4,
+   "disposizione": "AOML",
+   "ricostruito": true,
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2026-09-16",
+   "giorno": "mer",
+   "n_scuola": 5,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2026-09-17",
+   "giorno": "gio",
+   "n_scuola": 6,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2026-09-18",
+   "giorno": "ven",
+   "n_scuola": 7,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2026-09-21",
+   "giorno": "lun",
+   "n_scuola": 8,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2026-09-22",
+   "giorno": "mar",
+   "n_scuola": 9,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2026-09-23",
+   "giorno": "mer",
+   "n_scuola": 10,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2026-09-24",
+   "giorno": "gio",
+   "n_scuola": 11,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2026-09-25",
+   "giorno": "ven",
+   "n_scuola": 12,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2026-09-28",
+   "giorno": "lun",
+   "n_scuola": 13,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2026-09-29",
+   "giorno": "mar",
+   "n_scuola": 14,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2026-09-30",
+   "giorno": "mer",
+   "n_scuola": 15,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2026-10-01",
+   "giorno": "gio",
+   "n_scuola": 16,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2026-10-02",
+   "giorno": "ven",
+   "n_scuola": 17,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2026-10-05",
+   "giorno": "lun",
+   "n_scuola": 18,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2026-10-06",
+   "giorno": "mar",
+   "n_scuola": 19,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2026-10-07",
+   "giorno": "mer",
+   "n_scuola": 20,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2026-10-08",
+   "giorno": "gio",
+   "n_scuola": 21,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2026-10-09",
+   "giorno": "ven",
+   "n_scuola": 22,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2026-10-12",
+   "giorno": "lun",
+   "n_scuola": 23,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2026-10-13",
+   "giorno": "mar",
+   "n_scuola": 24,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2026-10-14",
+   "giorno": "mer",
+   "n_scuola": 25,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2026-10-15",
+   "giorno": "gio",
+   "n_scuola": 26,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2026-10-16",
+   "giorno": "ven",
+   "n_scuola": 27,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2026-10-19",
+   "giorno": "lun",
+   "n_scuola": 28,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2026-10-20",
+   "giorno": "mar",
+   "n_scuola": 29,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2026-10-21",
+   "giorno": "mer",
+   "n_scuola": 30,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2026-10-22",
+   "giorno": "gio",
+   "n_scuola": 31,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2026-10-23",
+   "giorno": "ven",
+   "n_scuola": 32,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2026-10-26",
+   "giorno": "lun",
+   "n_scuola": 33,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2026-10-27",
+   "giorno": "mar",
+   "n_scuola": 34,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2026-10-28",
+   "giorno": "mer",
+   "n_scuola": 35,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2026-10-29",
+   "giorno": "gio",
+   "n_scuola": 36,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2026-11-03",
+   "giorno": "mar",
+   "n_scuola": 37,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2026-11-04",
+   "giorno": "mer",
+   "n_scuola": 38,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2026-11-05",
+   "giorno": "gio",
+   "n_scuola": 39,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2026-11-06",
+   "giorno": "ven",
+   "n_scuola": 40,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2026-11-09",
+   "giorno": "lun",
+   "n_scuola": 41,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2026-11-10",
+   "giorno": "mar",
+   "n_scuola": 42,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2026-11-11",
+   "giorno": "mer",
+   "n_scuola": 43,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2026-11-12",
+   "giorno": "gio",
+   "n_scuola": 44,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2026-11-13",
+   "giorno": "ven",
+   "n_scuola": 45,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2026-11-16",
+   "giorno": "lun",
+   "n_scuola": 46,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2026-11-17",
+   "giorno": "mar",
+   "n_scuola": 47,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2026-11-18",
+   "giorno": "mer",
+   "n_scuola": 48,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2026-11-19",
+   "giorno": "gio",
+   "n_scuola": 49,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2026-11-20",
+   "giorno": "ven",
+   "n_scuola": 50,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2026-11-23",
+   "giorno": "lun",
+   "n_scuola": 51,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2026-11-24",
+   "giorno": "mar",
+   "n_scuola": 52,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2026-11-25",
+   "giorno": "mer",
+   "n_scuola": 53,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2026-11-26",
+   "giorno": "gio",
+   "n_scuola": 54,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2026-11-27",
+   "giorno": "ven",
+   "n_scuola": 55,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2026-11-30",
+   "giorno": "lun",
+   "n_scuola": 56,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2026-12-01",
+   "giorno": "mar",
+   "n_scuola": 57,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2026-12-02",
+   "giorno": "mer",
+   "n_scuola": 58,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2026-12-03",
+   "giorno": "gio",
+   "n_scuola": 59,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2026-12-04",
+   "giorno": "ven",
+   "n_scuola": 60,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2026-12-09",
+   "giorno": "mer",
+   "n_scuola": 61,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2026-12-10",
+   "giorno": "gio",
+   "n_scuola": 62,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2026-12-11",
+   "giorno": "ven",
+   "n_scuola": 63,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2026-12-14",
+   "giorno": "lun",
+   "n_scuola": 64,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2026-12-15",
+   "giorno": "mar",
+   "n_scuola": 65,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2026-12-16",
+   "giorno": "mer",
+   "n_scuola": 66,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2026-12-17",
+   "giorno": "gio",
+   "n_scuola": 67,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2026-12-18",
+   "giorno": "ven",
+   "n_scuola": 68,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2026-12-21",
+   "giorno": "lun",
+   "n_scuola": 69,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2026-12-22",
+   "giorno": "mar",
+   "n_scuola": 70,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2027-01-07",
+   "giorno": "gio",
+   "n_scuola": 71,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2027-01-08",
+   "giorno": "ven",
+   "n_scuola": 72,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2027-01-11",
+   "giorno": "lun",
+   "n_scuola": 73,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2027-01-12",
+   "giorno": "mar",
+   "n_scuola": 74,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2027-01-13",
+   "giorno": "mer",
+   "n_scuola": 75,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2027-01-14",
+   "giorno": "gio",
+   "n_scuola": 76,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2027-01-15",
+   "giorno": "ven",
+   "n_scuola": 77,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2027-01-18",
+   "giorno": "lun",
+   "n_scuola": 78,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2027-01-19",
+   "giorno": "mar",
+   "n_scuola": 79,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2027-01-20",
+   "giorno": "mer",
+   "n_scuola": 80,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2027-01-21",
+   "giorno": "gio",
+   "n_scuola": 81,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2027-01-22",
+   "giorno": "ven",
+   "n_scuola": 82,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2027-01-25",
+   "giorno": "lun",
+   "n_scuola": 83,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2027-01-26",
+   "giorno": "mar",
+   "n_scuola": 84,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2027-01-27",
+   "giorno": "mer",
+   "n_scuola": 85,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2027-01-28",
+   "giorno": "gio",
+   "n_scuola": 86,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2027-01-29",
+   "giorno": "ven",
+   "n_scuola": 87,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2027-02-01",
+   "giorno": "lun",
+   "n_scuola": 88,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2027-02-02",
+   "giorno": "mar",
+   "n_scuola": 89,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2027-02-03",
+   "giorno": "mer",
+   "n_scuola": 90,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2027-02-04",
+   "giorno": "gio",
+   "n_scuola": 91,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2027-02-05",
+   "giorno": "ven",
+   "n_scuola": 92,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2027-02-11",
+   "giorno": "gio",
+   "n_scuola": 93,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2027-02-12",
+   "giorno": "ven",
+   "n_scuola": 94,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2027-02-15",
+   "giorno": "lun",
+   "n_scuola": 95,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2027-02-16",
+   "giorno": "mar",
+   "n_scuola": 96,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2027-02-17",
+   "giorno": "mer",
+   "n_scuola": 97,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2027-02-18",
+   "giorno": "gio",
+   "n_scuola": 98,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2027-02-19",
+   "giorno": "ven",
+   "n_scuola": 99,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2027-02-22",
+   "giorno": "lun",
+   "n_scuola": 100,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2027-02-23",
+   "giorno": "mar",
+   "n_scuola": 101,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2027-02-24",
+   "giorno": "mer",
+   "n_scuola": 102,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2027-02-25",
+   "giorno": "gio",
+   "n_scuola": 103,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2027-02-26",
+   "giorno": "ven",
+   "n_scuola": 104,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2027-03-01",
+   "giorno": "lun",
+   "n_scuola": 105,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2027-03-02",
+   "giorno": "mar",
+   "n_scuola": 106,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2027-03-03",
+   "giorno": "mer",
+   "n_scuola": 107,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2027-03-04",
+   "giorno": "gio",
+   "n_scuola": 108,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2027-03-05",
+   "giorno": "ven",
+   "n_scuola": 109,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2027-03-08",
+   "giorno": "lun",
+   "n_scuola": 110,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2027-03-09",
+   "giorno": "mar",
+   "n_scuola": 111,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2027-03-10",
+   "giorno": "mer",
+   "n_scuola": 112,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2027-03-11",
+   "giorno": "gio",
+   "n_scuola": 113,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2027-03-12",
+   "giorno": "ven",
+   "n_scuola": 114,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2027-03-15",
+   "giorno": "lun",
+   "n_scuola": 115,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2027-03-16",
+   "giorno": "mar",
+   "n_scuola": 116,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2027-03-17",
+   "giorno": "mer",
+   "n_scuola": 117,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2027-03-18",
+   "giorno": "gio",
+   "n_scuola": 118,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2027-03-19",
+   "giorno": "ven",
+   "n_scuola": 119,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2027-03-22",
+   "giorno": "lun",
+   "n_scuola": 120,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2027-03-23",
+   "giorno": "mar",
+   "n_scuola": 121,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2027-03-24",
+   "giorno": "mer",
+   "n_scuola": 122,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2027-03-31",
+   "giorno": "mer",
+   "n_scuola": 123,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2027-04-01",
+   "giorno": "gio",
+   "n_scuola": 124,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2027-04-02",
+   "giorno": "ven",
+   "n_scuola": 125,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2027-04-05",
+   "giorno": "lun",
+   "n_scuola": 126,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2027-04-06",
+   "giorno": "mar",
+   "n_scuola": 127,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2027-04-07",
+   "giorno": "mer",
+   "n_scuola": 128,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2027-04-08",
+   "giorno": "gio",
+   "n_scuola": 129,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2027-04-09",
+   "giorno": "ven",
+   "n_scuola": 130,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2027-04-12",
+   "giorno": "lun",
+   "n_scuola": 131,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2027-04-13",
+   "giorno": "mar",
+   "n_scuola": 132,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2027-04-14",
+   "giorno": "mer",
+   "n_scuola": 133,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2027-04-15",
+   "giorno": "gio",
+   "n_scuola": 134,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2027-04-16",
+   "giorno": "ven",
+   "n_scuola": 135,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2027-04-19",
+   "giorno": "lun",
+   "n_scuola": 136,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2027-04-20",
+   "giorno": "mar",
+   "n_scuola": 137,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2027-04-21",
+   "giorno": "mer",
+   "n_scuola": 138,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2027-04-22",
+   "giorno": "gio",
+   "n_scuola": 139,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2027-04-23",
+   "giorno": "ven",
+   "n_scuola": 140,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2027-04-26",
+   "giorno": "lun",
+   "n_scuola": 141,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2027-04-27",
+   "giorno": "mar",
+   "n_scuola": 142,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2027-04-28",
+   "giorno": "mer",
+   "n_scuola": 143,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2027-04-29",
+   "giorno": "gio",
+   "n_scuola": 144,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2027-05-03",
+   "giorno": "lun",
+   "n_scuola": 145,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2027-05-04",
+   "giorno": "mar",
+   "n_scuola": 146,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2027-05-05",
+   "giorno": "mer",
+   "n_scuola": 147,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2027-05-06",
+   "giorno": "gio",
+   "n_scuola": 148,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2027-05-07",
+   "giorno": "ven",
+   "n_scuola": 149,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2027-05-10",
+   "giorno": "lun",
+   "n_scuola": 150,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2027-05-11",
+   "giorno": "mar",
+   "n_scuola": 151,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2027-05-12",
+   "giorno": "mer",
+   "n_scuola": 152,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2027-05-13",
+   "giorno": "gio",
+   "n_scuola": 153,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2027-05-14",
+   "giorno": "ven",
+   "n_scuola": 154,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2027-05-17",
+   "giorno": "lun",
+   "n_scuola": 155,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2027-05-18",
+   "giorno": "mar",
+   "n_scuola": 156,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2027-05-19",
+   "giorno": "mer",
+   "n_scuola": 157,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2027-05-20",
+   "giorno": "gio",
+   "n_scuola": 158,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2027-05-21",
+   "giorno": "ven",
+   "n_scuola": 159,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2027-05-24",
+   "giorno": "lun",
+   "n_scuola": 160,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2027-05-25",
+   "giorno": "mar",
+   "n_scuola": 161,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2027-05-26",
+   "giorno": "mer",
+   "n_scuola": 162,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2027-05-27",
+   "giorno": "gio",
+   "n_scuola": 163,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2027-05-28",
+   "giorno": "ven",
+   "n_scuola": 164,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2027-05-31",
+   "giorno": "lun",
+   "n_scuola": 165,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2027-06-01",
+   "giorno": "mar",
+   "n_scuola": 166,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  },
+  {
+   "data": "2027-06-03",
+   "giorno": "gio",
+   "n_scuola": 167,
+   "disposizione": "MLAO",
+   "avanti": "M",
+   "dietro_sx": "L",
+   "centro": "A",
+   "dietro_dx": "O"
+  },
+  {
+   "data": "2027-06-04",
+   "giorno": "ven",
+   "n_scuola": 168,
+   "disposizione": "AOML",
+   "avanti": "A",
+   "dietro_sx": "O",
+   "centro": "M",
+   "dietro_dx": "L"
+  },
+  {
+   "data": "2027-06-07",
+   "giorno": "lun",
+   "n_scuola": 169,
+   "disposizione": "OMLA",
+   "avanti": "O",
+   "dietro_sx": "M",
+   "centro": "L",
+   "dietro_dx": "A"
+  },
+  {
+   "data": "2027-06-08",
+   "giorno": "mar",
+   "n_scuola": 170,
+   "disposizione": "LAOM",
+   "avanti": "L",
+   "dietro_sx": "A",
+   "centro": "O",
+   "dietro_dx": "M"
+  }
+ ]
+}

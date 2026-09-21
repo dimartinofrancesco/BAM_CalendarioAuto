@@ -1,0 +1,6 @@
+{
+  "_come_si_usa": "Aggiungi in 'forzati' un oggetto per ogni giorno con assenti. Con piu' assenti i posti liberi sono: 1 assente = centro, 2 = centro e avanti, 3 = si usa solo avanti. Il tasto 'Ricalcola con assenti' dell'app ti manda su WhatsApp la riga gia' pronta da incollare. Dopo il salvataggio su GitHub la pagina ricalcola da sola tutti i giorni successivi.",
+  "_formato": "{\"data\": \"AAAA-MM-GG\", \"assenti\": [\"M\"]}  -  assenti = sigle dei bambini (O, L, A, M). Solo giorni di scuola. La data 'agg.' mostrata nella barra in alto e' l'ultima modifica di questo file.",
+  "_opzionale": "Per forzare i posti a mano aggiungi \"disposizione\": 4 lettere nell'ordine Avanti, Dietro sx, Centro, Dietro dx, con - per il posto vuoto (es. \"OL-A\"). Se presente ha la precedenza sul calcolo.",
+  "forzati": []
+}

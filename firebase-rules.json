@@ -1,0 +1,29 @@
+{
+  "rules": {
+    ".read": "auth != null && auth.token.email === 'famiglia@calendarioauto.app'",
+    ".write": "auth != null && auth.token.email === 'famiglia@calendarioauto.app'",
+
+    "forzati": {
+      "$data": {
+        ".validate": "$data.matches(/^20[0-9][0-9]-[01][0-9]-[0-3][0-9]$/) && newData.hasChild('updatedAt') && ((newData.hasChild('assenti') && !newData.hasChild('disposizione')) || (!newData.hasChild('assenti') && newData.hasChild('disposizione')))",
+        "updatedAt": { ".validate": "newData.isNumber()" },
+        "disposizione": { ".validate": "newData.isString() && newData.val().matches(/^[OLAM-][OLAM-][OLAM-][OLAM-]$/)" },
+        "assenti": {
+          "$i": { ".validate": "newData.isString() && newData.val().matches(/^[OLAM]$/)" }
+        },
+        "$altro": { ".validate": false }
+      }
+    },
+
+    "config": {
+      "sigle": {
+        "$sigla": { ".validate": "$sigla.matches(/^[OLAM]$/) && newData.isString() && newData.val().length > 0 && newData.val().length <= 30" }
+      },
+      "$altro": { ".validate": false }
+    },
+
+    "ultimaModifica": { ".validate": "newData.isNumber()" },
+
+    "$altro": { ".validate": false }
+  }
+}
